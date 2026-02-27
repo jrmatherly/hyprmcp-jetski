@@ -53,6 +53,16 @@ npm start                       # Angular dev server on :4200 (proxies API to :8
 
 Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`, `docs`, `perf`, `refactor`, `deps`, `ci`, `test`, `build`, `style`, `revert`
 
+### Release Process
+
+- Uses **release-please** (`googleapis/release-please-action` v4) — config in `release-please-config.json`, manifest in `.release-please-manifest.json`
+- Push to `main` with conventional commits → release-please **creates/updates a PR** (not a release directly)
+- **Merging the release PR** triggers the actual GitHub Release + git tag
+- Release type: `go`, tags without `v` prefix (`include-v-in-tag: false`), bumps `package.json` version via `extra-files`
+- `feat:` → minor bump, `fix:` → patch bump, `!` suffix → major bump
+- Merge with: `gh pr merge <n> --repo jrmatherly/hyprmcp-jetski --merge`
+- Verify release: `gh release list --repo jrmatherly/hyprmcp-jetski`
+
 ### Claude Code Automations
 
 - **Hooks** (`.claude/settings.json`):
