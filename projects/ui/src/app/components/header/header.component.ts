@@ -1,4 +1,5 @@
 import { CdkMenuTrigger } from '@angular/cdk/menu';
+import { type ConnectedPosition } from '@angular/cdk/overlay';
 
 import { Component, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -150,7 +151,7 @@ import { BrnTooltip } from '@spartan-ng/brain/tooltip';
           <button
             class="flex items-center gap-2 py-2 px-3 bg-foreground text-sm text-background font-medium rounded-md transition-colors cursor-pointer"
             [cdkMenuTriggerFor]="addNewMenu"
-            align="end"
+            [cdkMenuPosition]="menuAlignEnd"
           >
             Add new&hellip;
             <ng-icon name="lucideChevronDown" size="16" />
@@ -241,6 +242,10 @@ import { BrnTooltip } from '@spartan-ng/brain/tooltip';
 export class HeaderComponent {
   public themeService = inject(ThemeService);
   private readonly oauthService = inject(OAuthService);
+
+  protected readonly menuAlignEnd: ConnectedPosition[] = [
+    { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
+  ];
   protected readonly contextService = inject(ContextService);
   protected readonly userData = this.oauthService.getIdentityClaims();
   protected readonly userEmail = computed(() => {
