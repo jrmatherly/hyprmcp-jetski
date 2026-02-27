@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.1](https://github.com/jrmatherly/hyprmcp-jetski/compare/0.6.0...0.6.1) (2026-02-27)
+
+
+### Bug Fixes
+
+* Sanitize URL path in request logging to prevent log injection (CWE-117) ([41c0c15](https://github.com/jrmatherly/hyprmcp-jetski/commit/41c0c15ee333a265741df02e3c762e055c5b8cdb))
+* Upgrade OpenTelemetry SDK to v1.40.0 to fix PATH hijacking vulnerability (CVE-2026-24051) ([e037718](https://github.com/jrmatherly/hyprmcp-jetski/commit/e0377184cdb4c4ec5582aa4b6c42d277ca7c47e2))
+
 ## [0.6.0](https://github.com/jrmatherly/hyprmcp-jetski/compare/0.5.0...0.6.0) (2026-02-27)
 
 
