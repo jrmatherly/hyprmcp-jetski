@@ -90,7 +90,7 @@ Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`,
 
 ## Architecture Overview
 
-### Frontend (Angular 20)
+### Frontend (Angular 21)
 
 - **Zoneless** change detection (`provideZonelessChangeDetection()`)
 - **Standalone components** only (no NgModules)
