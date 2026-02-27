@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_FILE_PATH\"; if [[ \"$file\" == *.ts || \"$file\" == *.html || \"$file\" == *.css ]]; then npx prettier --write \"$file\" 2>/dev/null; fi",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_FILE_PATH\"; case \"$file\" in *pnpm-lock.yaml|*go.sum|*.secret.env*) echo 'BLOCK: Do not edit lock files or secret env files directly' >&2; exit 2;; esac",
+            "timeout": 5000
+          }
+        ]
+      }
+    ]
+  }
+}

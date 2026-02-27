@@ -1,0 +1,155 @@
+{
+  "name": "jetski",
+  "version": "0.4.4",
+  "module": "github.com/hyprmcp/jetski",
+  "generated": "2026-02-26",
+  "purpose": "MCP Gateway management platform - web UI + Go backend for managing MCP gateway deployments on Kubernetes",
+  "stack": {
+    "frontend": {
+      "framework": "Angular 20",
+      "ui": "Spartan UI (Brain + Helm)",
+      "styling": "Tailwind CSS 4",
+      "icons": "ng-icons + Lucide",
+      "tables": "TanStack Angular Table",
+      "charts": "Chart.js / ng2-charts",
+      "auth": "angular-oauth2-oidc (Dex OIDC)",
+      "analytics": "PostHog, Sentry",
+      "packageManager": "pnpm 10"
+    },
+    "backend": {
+      "language": "Go 1.25",
+      "cli": "Cobra",
+      "router": "Chi",
+      "database": "PostgreSQL (pgx)",
+      "migrations": "golang-migrate",
+      "kubernetes": "client-go + controller-runtime + metacontroller",
+      "jwt": "lestrrat-go/jwx",
+      "observability": "OpenTelemetry + Sentry",
+      "logging": "Zap",
+      "email": "AWS SES / SMTP / noop"
+    },
+    "infra": {
+      "container": "Docker (distroless)",
+      "ci": "GitHub Actions",
+      "release": "Release Please",
+      "deps": "Renovate",
+      "taskRunner": "mise"
+    }
+  },
+  "entryPoints": {
+    "cli": "main.go → internal/cmd/root.go",
+    "apiServer": "internal/cmd/serve.go (port 8080)",
+    "webhookServer": "internal/cmd/serve.go (port 8085)",
+    "frontend": "projects/ui/src/main.ts (port 4200)"
+  },
+  "structure": {
+    "backend": {
+      "internal/cmd": "Cobra CLI: serve, migrate, generate",
+      "internal/handlers": "HTTP API handlers (orgs, projects, dashboard, webhooks)",
+      "internal/middleware": "Auth, logging, OTEL, rate limiting, Sentry",
+      "internal/routing": "Chi router setup",
+      "internal/server": "HTTP server + graceful shutdown",
+      "internal/svc": "Service registry (DB, logger, JWT, mailer, K8s)",
+      "internal/db": "PostgreSQL data access (pgx)",
+      "internal/types": "Domain models",
+      "internal/kubernetes": "MCPGateway CRD (v1alpha1) + controller",
+      "internal/analytics": "Usage analytics",
+      "internal/migrations": "7 SQL migrations",
+      "internal/auth": "JWT/OIDC types",
+      "internal/mail": "Pluggable mailer (SMTP/SES/noop)",
+      "internal/env": "Environment config"
+    },
+    "frontend": {
+      "projects/ui/src/app/app.ts": "Root component",
+      "projects/ui/src/app/app-shell.component.ts": "Layout shell",
+      "projects/ui/src/app/app.config.ts": "Zoneless, OAuth2, Sentry providers",
+      "projects/ui/src/app/app.routes.ts": "Auth guard + lazy-loaded routes",
+      "projects/ui/src/app/authenticated.routes.ts": "All authenticated routes",
+      "projects/ui/src/app/components/": "Shared components (header, nav, table, deployments)",
+      "projects/ui/src/app/pages/": "15 page components",
+      "projects/ui/src/app/services/": "ContextService, ThemeService",
+      "projects/ui/src/app/pipes/": "ColorPipe, RelativeDatePipe, HighlightJsonPipe",
+      "projects/ui/src/app/libs/ui/": "16 Spartan/Helm UI packages"
+    }
+  },
+  "apiRoutes": {
+    "/api/v1/context": "GET - App context",
+    "/api/v1/verify-mcp-endpoint": "GET - Verify MCP server connectivity",
+    "/api/v1/organizations": "GET/POST - List/create orgs",
+    "/api/v1/organizations/:id": "PUT - Update org",
+    "/api/v1/organizations/:id/members": "GET/PUT - List/add members",
+    "/api/v1/organizations/:id/members/:userId": "DELETE - Remove member",
+    "/api/v1/projects": "GET/POST - List/create projects",
+    "/api/v1/projects/:id": "GET/DELETE - Get/delete project",
+    "/api/v1/projects/:id/status": "GET - Deployment status",
+    "/api/v1/projects/:id/logs": "GET - MCP server logs",
+    "/api/v1/projects/:id/prompts": "GET - Prompt analytics",
+    "/api/v1/projects/:id/deployment-revisions": "GET - Deployment history",
+    "/api/v1/projects/:id/analytics": "GET - Project analytics",
+    "/api/v1/projects/:id/settings": "PUT - Update settings",
+    "/api/v1/dashboard/projects": "GET - Project summaries",
+    "/api/v1/dashboard/deployment-revisions": "GET - Recent deployments",
+    "/api/v1/dashboard/usage": "GET - Usage stats",
+    "/webhook/sync": "Gateway sync",
+    "/webhook/kubernetes": "K8s events",
+    "/webhook/tlsask": "TLS certificate requests"
+  },
+  "frontendRoutes": {
+    "/": "Redirect to default org/project",
+    "/onboarding": "New user organization setup",
+    "/organizations/new": "Create new organization",
+    "/:org": "Organization dashboard",
+    "/:org/settings": "Organization settings (general, auth, members, projects)",
+    "/:org/new": "Create new project",
+    "/:org/project/:name": "Project dashboard (analytics)",
+    "/:org/project/:name/check": "Post-creation provisioning check",
+    "/:org/project/:name/logs": "MCP call logs",
+    "/:org/project/:name/prompts": "Prompt analytics",
+    "/:org/project/:name/deployments": "Deployment history",
+    "/:org/project/:name/monitoring": "Health metrics + charts"
+  },
+  "commands": {
+    "frontend": {
+      "pnpm install": "Install dependencies",
+      "npm start": "Dev server :4200",
+      "npm run build": "Production build",
+      "npm test": "Unit tests (Karma)",
+      "npm run format": "Prettier + ESLint fix",
+      "npm run lint": "Check lint"
+    },
+    "backend": {
+      "mise run serve": "Run Go server",
+      "mise run test": "Go tests",
+      "mise run lint": "golangci-lint",
+      "mise run migrate": "Run DB migrations",
+      "mise run purge": "Rollback migrations",
+      "mise run generate": "Generate code",
+      "mise run controller-gen": "Regenerate CRD objects"
+    },
+    "infra": {
+      "mise install": "Install all tool versions",
+      "docker compose up -d": "Start local dev services"
+    }
+  },
+  "automations": {
+    "hooks": {
+      ".claude/settings.json": "PostToolUse: auto-format TS/HTML/CSS; PreToolUse: block lock files + secret env files"
+    },
+    "subagents": {
+      ".claude/agents/go-reviewer.md": "Go code review (SQL injection, middleware ordering, error handling, K8s CRD)",
+      ".claude/agents/angular-reviewer.md": "Angular conventions (standalone, zoneless, signals, ng-icons, Spartan UI)"
+    },
+    "skills": {
+      ".claude/skills/new-component/SKILL.md": "/new-component <name> — scaffold Angular standalone component",
+      ".claude/skills/deploy-check/SKILL.md": "/deploy-check — run full FE+BE validation (lint + test)"
+    }
+  },
+  "fileCounts": {
+    "goFiles": 84,
+    "tsFiles": 51,
+    "goTestFiles": 3,
+    "tsSpecFiles": 1,
+    "sqlMigrations": 7,
+    "uiLibPackages": 16
+  }
+}

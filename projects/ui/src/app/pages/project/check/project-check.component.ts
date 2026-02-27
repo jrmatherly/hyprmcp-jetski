@@ -1,0 +1,127 @@
+import { HttpClient } from '@angular/common/http';
+import { Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideCircleCheck, lucideExternalLink } from '@ng-icons/lucide';
+import { HlmCardImports } from '@spartan-ng/helm/card';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
+import {
+  delay,
+  distinctUntilChanged,
+  filter,
+  map,
+  of,
+  retry,
+  switchMap,
+  take,
+  throwError,
+} from 'rxjs';
+import { getProjectUrl } from '../../../../api/project';
+import { ContextService } from '../../../services/context.service';
+
+@Component({
+  imports: [HlmCardImports, HlmSpinnerImports, NgIcon, HlmIcon],
+  viewProviders: [provideIcons({ lucideCircleCheck, lucideExternalLink })],
+  template: `
+    <div class="max-w-screen-md mx-auto">
+      <div hlmCard class="mx-4 md:mx-0 md:mt-24">
+        <div
+          hlmCardContent
+          class="flex items-center justify-center gap-4 md:m-12"
+        >
+          @if (success()) {
+            <div class="flex flex-col items-center text-center">
+              <ng-icon
+                hlm
+                name="lucideCircleCheck"
+                size="xl"
+                class="text-green-500 mb-4"
+              />
+              <div class="">Your MCP Endpoint is ready</div>
+              @if (projectUrl(); as projectUrl) {
+                <div class="mt-8 mb-4 text-muted-foreground">
+                  Open your server URL in the browser for detailed installation
+                  instructions:
+                </div>
+                <a
+                  [href]="projectUrl"
+                  target="_blank"
+                  class="text-2xl font-semibold hover:underline inline-flex items-center gap-2"
+                >
+                  <ng-icon hlm name="lucideExternalLink" />
+                  {{ projectUrl }}
+                </a>
+              }
+              <div class="text-muted-foreground mt-4 md:mt-12">
+                Or configure this URL in your MCP client using
+                <strong>Streamable HTTP</strong> transport.
+              </div>
+            </div>
+          } @else if (errorMessage()) {
+            <div class="text-muted-foreground text-center">
+              {{ errorMessage() }}
+            </div>
+          } @else {
+            <hlm-spinner class="size-10" />
+            <div>
+              <h2 class="text-xl font-semibold">
+                Your MCP Gateway is being provisioned, please stand by…
+              </h2>
+              @if (projectUrl(); as projectUrl) {
+                <div class="text-muted-foreground">
+                  It will be available at
+                  <span class="font-medium">{{ projectUrl }}</span> shortly.
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  `,
+})
+export class ProjectCheckComponent {
+  private readonly contextService = inject(ContextService);
+  private readonly httpClient = inject(HttpClient);
+  private readonly organization = this.contextService.selectedOrg;
+  private readonly project = this.contextService.selectedProject;
+  protected readonly projectUrl = computed(() => {
+    const org = this.organization();
+    const proj = this.project();
+    if (org && proj) {
+      return getProjectUrl(org, proj);
+    }
+    return undefined;
+  });
+  protected readonly success = signal(false);
+  protected readonly errorMessage = signal<string | undefined>(undefined);
+
+  constructor() {
+    toObservable(this.project)
+      .pipe(
+        map((project) => project?.id),
+        filter((id) => id !== undefined),
+        distinctUntilChanged(),
+        delay(5_000),
+        switchMap((id) =>
+          this.httpClient
+            .get<{ ok: boolean }>(`/api/v1/projects/${id}/status`)
+            .pipe(
+              switchMap((result) =>
+                result.ok ? of(true) : throwError(() => 'check failed'),
+              ),
+              // try every 5 seconds, stop after 5 minutes
+              retry({ count: 60, delay: 5_000 }),
+            ),
+        ),
+        take(1),
+        takeUntilDestroyed(),
+      )
+      .subscribe({
+        next: () => this.success.set(true),
+        error: (error) =>
+          this.errorMessage.set(error?.message || 'An error occurred'),
+      });
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "componentsPath": "projects/ui/libs/ui",
+  "buildable": true,
+  "generateAs": "library",
+  "importAlias": "@spartan-ng/helm"
+}

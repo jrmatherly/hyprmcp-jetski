@@ -1,0 +1,1027 @@
+organizations:
+  - name: jetski
+    user: admin@example.com
+    projects:
+      - name: v0-jetski
+        deploymentRevisions:
+          - port: 8080
+            ociUrl: some-oci-url
+            ago: 23h
+            randomLogs: 10
+            events:
+              - type: progressing
+                ago: 23h
+              - type: error
+                ago: 22h59m
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 22h30m
+            randomLogs: 10000
+            events:
+              - type: progressing
+                ago: 22h30m
+              - type: ok
+                ago: 22h28m
+      - name: v0-jetski-mcp
+        deploymentRevisions:
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 25h
+            randomLogs: 1500
+            events:
+              - type: progressing
+                ago: 25h
+              - type: ok
+                ago: 24h55m
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 24h
+            randomLogs: 1000
+            events:
+              - type: progressing
+                ago: 24h
+              - type: ok
+                ago: 23h57m
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 20h
+            randomLogs: 100
+            events:
+              - type: progressing
+                ago: 20h
+              - type: error
+                ago: 19h
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 18h
+            randomLogs: 10000
+            events:
+              - type: progressing
+                ago: 18h
+              - type: ok
+                ago: 17h57m
+              - type: error
+                ago: 12h
+      - name: v0-jetski-frontend
+        deploymentRevisions:
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 15m
+            randomLogs: 8
+            events:
+              - type: progressing
+                ago: 15m
+  - name: glasskube
+    user: pmig@glasskube.com
+    projects:
+      - name: weather
+        deploymentRevisions:
+          - port: 9000
+            ociUrl: localhost
+            ago: 1h
+            randomLogs: 0
+            events:
+              - type: ok
+                ago: 15m
+      - name: public-weather
+        deploymentRevisions:
+          - port: 9000
+            ociUrl: localhost
+            ago: 1h
+            randomLogs: 0
+            events:
+              - type: ok
+                ago: 15m
+      - name: prompt-catcher
+        deploymentRevisions:
+          - port: 3000
+            ociUrl: localhost
+            ago: 1h
+            randomLogs: 0
+            events:
+              - type: ok
+                ago: 15m
+      - name: distr
+        deploymentRevisions:
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 25h
+            randomLogs: 0
+            logs:
+              - method: tools/list
+                userAgent: node
+                httpStatus: 200
+                parameters: []
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: get_current_weather
+                    arguments:
+                      - name: city
+                        value: Vienna
+                      - name: hyprmcpPromptAnalytics
+                        value: "What's the weather like in Vienna today?"
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: get_weather_by_datetime_range
+                    arguments:
+                      - name: city
+                        value: Tarvis
+                      - name: start_date
+                        value: 2025-08-02
+                      - name: end_date
+                        value: 2025-08-03
+                      - name: hyprmcpPromptAnalytics
+                        value: "Show me the weather forecast for Tarvis from August 2nd to 3rd, 2025"
+                success: false
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: new_york
+                      - name: time
+                        value: today
+                      - name: hyprmcpPromptAnalytics
+                        value: "Get today's weather for New York"
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: javascript
+                      - name: framework
+                        value: react
+                      - name: hyprmcpPromptAnalytics
+                        value: "Generate a React component in JavaScript for displaying user profiles"
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: sentiment
+                      - name: language
+                        value: english
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: file_operations
+                    arguments:
+                      - name: operation_type
+                        value: read
+                      - name: file_type
+                        value: json
+                      - name: hyprmcpPromptAnalytics
+                        value: "Read the configuration from the JSON file in the project root"
+                success: false
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: select
+                      - name: database
+                        value: postgresql
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: san_francisco
+                      - name: temperature_unit
+                        value: celsius
+                      - name: hyprmcpPromptAnalytics
+                        value: "What's the temperature in San Francisco in Celsius?"
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: python
+                      - name: complexity
+                        value: medium
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: api_request
+                    arguments:
+                      - name: http_method
+                        value: get
+                      - name: api_type
+                        value: rest
+                      - name: hyprmcpPromptAnalytics
+                        value: "Fetch the latest user data from the REST API endpoint"
+                success: false
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: resize
+                      - name: format
+                        value: jpeg
+                      - name: hyprmcpPromptAnalytics
+                        value: "Resize all product images to thumbnail size and save as JPEG"
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: bar_chart
+                      - name: data_source
+                        value: csv
+                success: true
+            events:
+              - type: progressing
+                ago: 25h
+              - type: ok
+                ago: 24h55m
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 24h
+            randomLogs: 0
+            logs:
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: keywords
+                      - name: text_length
+                        value: medium_100_500
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: typescript
+                      - name: framework
+                        value: angular
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: file_operations
+                    arguments:
+                      - name: operation_type
+                        value: write
+                      - name: file_type
+                        value: text_files
+                      - name: hyprmcpPromptAnalytics
+                        value: "Save the generated report to a text file in the reports directory"
+                success: false
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: insert
+                      - name: table_size
+                        value: medium_1k_100k
+                      - name: hyprmcpPromptAnalytics
+                        value: "Insert the new customer records into the database"
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: berlin
+                      - name: time
+                        value: tomorrow
+                      - name: hyprmcpPromptAnalytics
+                        value: "Check tomorrow's weather in Berlin"
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: api_request
+                    arguments:
+                      - name: http_method
+                        value: post
+                      - name: response_format
+                        value: json
+                      - name: hyprmcpPromptAnalytics
+                        value: "Send the processed data to the API and get JSON response"
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: crop
+                      - name: quality
+                        value: high
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: line_chart
+                      - name: theme
+                        value: dark
+                      - name: hyprmcpPromptAnalytics
+                        value: "Create a line chart with dark theme for monthly sales data"
+                success: false
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: summarization
+                      - name: confidence_level
+                        value: high_90
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: go
+                      - name: component_type
+                        value: api_endpoint
+                success: true
+            events:
+              - type: progressing
+                ago: 24h
+              - type: ok
+                ago: 23h57m
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 20h
+            randomLogs: 0
+            logs:
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: file_operations
+                    arguments:
+                      - name: operation_type
+                        value: delete
+                      - name: file_type
+                        value: images
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: update
+                      - name: database
+                        value: mysql
+                      - name: hyprmcpPromptAnalytics
+                        value: "Update user preferences in the MySQL database"
+                success: false
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: new_york
+                      - name: temperature_unit
+                        value: fahrenheit
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: api_request
+                    arguments:
+                      - name: http_method
+                        value: put
+                      - name: api_type
+                        value: graphql
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: filter
+                      - name: size
+                        value: large_5mb
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: translation
+                      - name: language
+                        value: spanish
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: pie_chart
+                      - name: output_format
+                        value: svg
+                      - name: hyprmcpPromptAnalytics
+                        value: "Generate a pie chart showing market share distribution as SVG"
+                success: false
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: javascript
+                      - name: component_type
+                        value: utility_function
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: delete
+                      - name: database
+                        value: mongodb
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: api_request
+                    arguments:
+                      - name: http_method
+                        value: delete
+                      - name: response_format
+                        value: xml
+                success: true
+            events:
+              - type: progressing
+                ago: 20h
+              - type: error
+                ago: 19h
+          - port: 8080
+            ociUrl: some-oci-url-fixed
+            ago: 18h
+            randomLogs: 0
+            logs:
+              - method: tools/list
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters: []
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: san_francisco
+                      - name: time
+                        value: next_week
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: sentiment
+                      - name: output_format
+                        value: csv
+                      - name: hyprmcpPromptAnalytics
+                        value: "Analyze customer reviews sentiment and export as CSV"
+                success: false
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: python
+                      - name: framework
+                        value: vue
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: file_operations
+                    arguments:
+                      - name: operation_type
+                        value: read
+                      - name: file_type
+                        value: json
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: convert
+                      - name: format
+                        value: png
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: scatter_plot
+                      - name: interactivity
+                        value: interactive
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: select
+                      - name: table_size
+                        value: large_100k
+                      - name: hyprmcpPromptAnalytics
+                        value: "Query all transaction records from the large database table"
+                success: false
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: api_request
+                    arguments:
+                      - name: http_method
+                        value: get
+                      - name: api_type
+                        value: websocket
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: keywords
+                      - name: language
+                        value: french
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: typescript
+                      - name: complexity
+                        value: complex
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: resize
+                      - name: quality
+                        value: medium
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: heatmap
+                      - name: size
+                        value: small
+                      - name: hyprmcpPromptAnalytics
+                        value: "Display correlation matrix as a small heatmap visualization"
+                success: false
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: file_operations
+                    arguments:
+                      - name: operation_type
+                        value: write
+                      - name: file_type
+                        value: text_files
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: insert
+                      - name: database
+                        value: postgresql
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: berlin
+                      - name: temperature_unit
+                        value: celsius
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: summarization
+                      - name: text_length
+                        value: long_500_chars
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: api_request
+                    arguments:
+                      - name: http_method
+                        value: post
+                      - name: response_format
+                        value: text
+                      - name: hyprmcpPromptAnalytics
+                        value: "Send webhook notification and return text response"
+                success: false
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: javascript
+                      - name: framework
+                        value: svelte
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: crop
+                      - name: format
+                        value: webp
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: bar_chart
+                      - name: data_source
+                        value: database
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: translation
+                      - name: language
+                        value: german
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: file_operations
+                    arguments:
+                      - name: operation_type
+                        value: delete
+                      - name: file_type
+                        value: images
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: update
+                      - name: table_size
+                        value: small_1k_rows
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: new_york
+                      - name: time
+                        value: today
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: go
+                      - name: component_type
+                        value: ui_component
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: api_request
+                    arguments:
+                      - name: http_method
+                        value: get
+                      - name: api_type
+                        value: rest
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: filter
+                      - name: size
+                        value: medium_1_5mb
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: keywords
+                      - name: confidence_level
+                        value: medium_70_90
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: line_chart
+                      - name: theme
+                        value: light
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: select
+                      - name: database
+                        value: mysql
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: file_operations
+                    arguments:
+                      - name: operation_type
+                        value: read
+                      - name: file_type
+                        value: json
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: san_francisco
+                      - name: temperature_unit
+                        value: fahrenheit
+                      - name: hyprmcpPromptAnalytics
+                        value: "Get San Francisco weather with temperature in Fahrenheit"
+                success: false
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: sentiment
+                      - name: output_format
+                        value: json
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: python
+                      - name: complexity
+                        value: simple
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: convert
+                      - name: quality
+                        value: low
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: pie_chart
+                      - name: output_format
+                        value: pdf
+                success: false
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: api_request
+                    arguments:
+                      - name: http_method
+                        value: put
+                      - name: response_format
+                        value: json
+                success: true
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: database_query
+                    arguments:
+                      - name: query_type
+                        value: delete
+                      - name: database
+                        value: mongodb
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: file_operations
+                    arguments:
+                      - name: operation_type
+                        value: write
+                      - name: file_type
+                        value: text_files
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: text_analysis
+                    arguments:
+                      - name: analysis_type
+                        value: translation
+                      - name: text_length
+                        value: short_100_chars
+                success: true
+              - method: tools/call
+                userAgent: cursor
+                httpStatus: 200
+                parameters:
+                  - name: get_weather
+                    arguments:
+                      - name: location
+                        value: berlin
+                      - name: time
+                        value: tomorrow
+                success: false
+              - method: tools/call
+                userAgent: claude_pro
+                httpStatus: 200
+                parameters:
+                  - name: code_generation
+                    arguments:
+                      - name: language
+                        value: typescript
+                      - name: framework
+                        value: react
+                success: true
+              - method: tools/call
+                userAgent: chatgpt
+                httpStatus: 200
+                parameters:
+                  - name: image_processing
+                    arguments:
+                      - name: operation
+                        value: resize
+                      - name: format
+                        value: jpeg
+                success: true
+              - method: tools/call
+                userAgent: other
+                httpStatus: 200
+                parameters:
+                  - name: data_visualization
+                    arguments:
+                      - name: chart_type
+                        value: scatter_plot
+                      - name: interactivity
+                        value: animated
+                success: true
+            events:
+              - type: progressing
+                ago: 18h
+              - type: ok
+                ago: 17h57m
+              - type: error
+                ago: 12h
+  - name: test
+    user: admin@example.com
+    projects:
+      - name: empty-project
