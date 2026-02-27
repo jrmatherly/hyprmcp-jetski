@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.6.0](https://github.com/jrmatherly/hyprmcp-jetski/compare/0.5.0...0.6.0) (2026-02-27)
+
+
+### Features
+
+* Upgrade Angular from v20 to v21.2.0 ([5bb3a3f](https://github.com/jrmatherly/hyprmcp-jetski/commit/5bb3a3f570a992cec5049cb99a96ff76e31b43ae))
+
+
+### Bug Fixes
+
+* **ci:** Add gosec exclusions for upstream Password fields and SSRF endpoint verification ([8979086](https://github.com/jrmatherly/hyprmcp-jetski/commit/89790861255aa703e3a4750aa9519201ee3fc229))
+* **ci:** Disable govulncheck internal checkout to fix duplicate Authorization header ([0647783](https://github.com/jrmatherly/hyprmcp-jetski/commit/0647783e09f47a2935a3216e86f3c8f8a7c99478))
+* Replace orphaned align="end" with cdkMenuPosition for right-aligned menus ([ea2edb0](https://github.com/jrmatherly/hyprmcp-jetski/commit/ea2edb0a5711ac2f67e8413aa846ad22fbef66ea))
+
+
+### Docs
+
+* Update CLAUDE.md to reflect Angular 21 upgrade ([9791011](https://github.com/jrmatherly/hyprmcp-jetski/commit/979101167e67f90d6d17ce3792e8d31ac7d4e0b0))
+
+
+### Dependency Updates
+
+* Upgrade @ng-icons/core and @ng-icons/lucide from v32 to v33.1.0 ([ef0567b](https://github.com/jrmatherly/hyprmcp-jetski/commit/ef0567b944fd74b0557130ae0b5319679200f1a7))
+* Upgrade @sentry/cli from v2.57.0 to v3.2.2 ([dd4550e](https://github.com/jrmatherly/hyprmcp-jetski/commit/dd4550ee82ebbeccad4a9c87a034ec69b5467d6a))
+* Upgrade @spartan-ng/brain to alpha.643, migrate menu helm to CDK ([8d6ded6](https://github.com/jrmatherly/hyprmcp-jetski/commit/8d6ded6f01fba99cb382e46d11c1ddd6c8b05499))
+* Upgrade jasmine-core to v6.1.0 and @types/jasmine to v6.0.0 ([e071e51](https://github.com/jrmatherly/hyprmcp-jetski/commit/e071e5141acd80e19293dd3d7d45256c9cf14b1e))
+
 ## [0.5.0](https://github.com/jrmatherly/hyprmcp-jetski/compare/0.4.4...0.5.0) (2026-02-27)
 
 
