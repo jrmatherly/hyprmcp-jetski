@@ -49,6 +49,10 @@ func LoggerCtxMiddleware(logger *zap.Logger) func(next http.Handler) http.Handle
 	}
 }
 
+func sanitizeLogValue(s string) string {
+	return strings.NewReplacer("\n", "", "\r", "").Replace(s)
+}
+
 func LoggingMiddleware(handler http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
@@ -58,7 +62,7 @@ func LoggingMiddleware(handler http.Handler) http.Handler {
 		logger := internalctx.GetLogger(r.Context())
 		logger.Info("handling request",
 			zap.String("method", r.Method),
-			zap.String("path", r.URL.Path),
+			zap.String("path", sanitizeLogValue(r.URL.Path)),
 			zap.Int("status", ww.Status()),
 			zap.String("time", elapsed.String()))
 	}
