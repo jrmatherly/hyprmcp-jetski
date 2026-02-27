@@ -33,11 +33,11 @@ importers:
         specifier: ^1.27.1
         version: 1.27.1(zod@4.3.6)
       '@ng-icons/core':
-        specifier: ^32.0.0
-        version: 32.2.0(@angular/common@21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2)
+        specifier: ^33.1.0
+        version: 33.1.0(@angular-devkit/schematics@21.2.0(chokidar@5.0.0))(@angular/common@21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(@schematics/angular@21.2.0(chokidar@5.0.0))(rxjs@7.8.2)
       '@ng-icons/lucide':
-        specifier: ^32.0.0
-        version: 32.2.0
+        specifier: ^33.1.0
+        version: 33.1.0
       '@sentry/angular':
         specifier: ^10.40.0
         version: 10.40.0(@angular/common@21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(@angular/router@21.2.0(@angular/common@21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(@angular/platform-browser@21.2.0(@angular/common@21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
@@ -96,6 +96,9 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
     devDependencies:
+      '@angular-devkit/schematics':
+        specifier: 21.2.0
+        version: 21.2.0(chokidar@5.0.0)
       '@angular/build':
         specifier: ^21.2.0
         version: 21.2.0(@angular/compiler-cli@21.2.0(@angular/compiler@21.2.0)(typescript@5.9.3))(@angular/compiler@21.2.0)(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(@angular/platform-browser@21.2.0(@angular/common@21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2)))(@types/node@24.7.2)(chokidar@5.0.0)(jiti@2.6.1)(karma@6.4.4)(less@4.4.2)(lightningcss@1.31.1)(postcss@8.5.6)(sass-embedded@1.93.2)(stylus@0.64.0)(tailwindcss@4.2.1)(terser@5.44.0)(tslib@2.8.1)(typescript@5.9.3)(yaml@2.8.1)
@@ -108,6 +111,9 @@ importers:
       '@eslint/js':
         specifier: ^9.31.0
         version: 9.39.2
+      '@schematics/angular':
+        specifier: 21.2.0
+        version: 21.2.0(chokidar@5.0.0)
       '@sentry/cli':
         specifier: ^2.56.1
         version: 2.57.0(encoding@0.1.13)
@@ -2065,15 +2071,17 @@ packages:
   '@napi-rs/wasm-runtime@1.1.1':
     resolution: {integrity: sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==}
 
-  '@ng-icons/core@32.2.0':
-    resolution: {integrity: sha512-42S9QFH+FaigjXQp0QtWLHyJz8G8EaqJqcrK3qfZH4OyH86o32s3pkkf+lWnEtp2tR+07qNPSLYKCIgDE64Tug==}
+  '@ng-icons/core@33.1.0':
+    resolution: {integrity: sha512-kNkVt+saULAZp6f84PXmMRbNiiBVdqpM71ajiTAyTqOZCjKxXJe6gnpBfuOd0QvnkxEKSkFuswu4xFYbRPVXUQ==}
     peerDependencies:
-      '@angular/common': '>=20.0.0'
-      '@angular/core': '>=20.0.0'
+      '@angular-devkit/schematics': '>=21.0.0'
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+      '@schematics/angular': '>=21.0.0'
       rxjs: ^6.5.3 || ^7.4.0
 
-  '@ng-icons/lucide@32.2.0':
-    resolution: {integrity: sha512-9nFdsi9KInMfr9Q1lETdGJTPBwfkWteQi4hrzSHNa/J4fvvWB5CKrIIICb3MOKv7AW+Rb+t2p8yWcCf1fWPa7Q==}
+  '@ng-icons/lucide@33.1.0':
+    resolution: {integrity: sha512-oO23pA4o/xL00FRMnW0U+jEckxw743OjFFzY9Bi2P3aHpoa6CfDZcHzdV2eqNPqnVoTd0rG5WMcARlI1HhHfag==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -9541,14 +9549,16 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
-  '@ng-icons/core@32.2.0(@angular/common@21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2)':
+  '@ng-icons/core@33.1.0(@angular-devkit/schematics@21.2.0(chokidar@5.0.0))(@angular/common@21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(@schematics/angular@21.2.0(chokidar@5.0.0))(rxjs@7.8.2)':
     dependencies:
+      '@angular-devkit/schematics': 21.2.0(chokidar@5.0.0)
       '@angular/common': 21.2.0(@angular/core@21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2))(rxjs@7.8.2)
       '@angular/core': 21.2.0(@angular/compiler@21.2.0)(rxjs@7.8.2)
+      '@schematics/angular': 21.2.0(chokidar@5.0.0)
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@ng-icons/lucide@32.2.0':
+  '@ng-icons/lucide@33.1.0':
     dependencies:
       tslib: 2.8.1
 
@@ -12728,7 +12738,7 @@ snapshots:
 
   is-fullwidth-code-point@5.1.0:
     dependencies:
-      get-east-asian-width: 1.4.0
+      get-east-asian-width: 1.5.0
 
   is-glob@4.0.3:
     dependencies:
