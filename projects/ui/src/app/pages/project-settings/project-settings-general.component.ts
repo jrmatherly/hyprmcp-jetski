@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -16,7 +15,6 @@ import { ContextService } from '../../services/context.service';
 
 @Component({
   imports: [
-    CommonModule,
     HlmButton,
     HlmCheckbox,
     HlmLabel,

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -13,7 +12,7 @@ import { ContextService } from '../../services/context.service';
 @Component({
   selector: 'app-organization-settings',
   standalone: true,
-  imports: [CommonModule, NgIcon, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [NgIcon, RouterOutlet, RouterLink, RouterLinkActive],
   viewProviders: [
     provideIcons({
       lucideUsers,

@@ -1,12 +1,12 @@
 import { Component, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RelativeDatePipe } from '../../pipes/relative-date-pipe';
 import { DeploymentRevisionSummary } from '../../../api/dashboard';
 
 @Component({
   selector: 'app-deployments-revision',
   standalone: true,
-  imports: [CommonModule, RelativeDatePipe],
+  imports: [RelativeDatePipe],
   template: `
     @if (deploymentRevision(); as revision) {
       <div

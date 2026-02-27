@@ -1,5 +1,5 @@
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { CommonModule } from '@angular/common';
+
 import { Component, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -31,7 +31,6 @@ import { BrnTooltip } from '@spartan-ng/brain/tooltip';
 @Component({
   selector: 'app-header',
   imports: [
-    CommonModule,
     FormsModule,
     HlmButton,
     RouterLink,

@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { HlmCardContent, HlmCard } from '@spartan-ng/helm/card';
 import { HlmH3 } from '@spartan-ng/helm/typography';
 import { getRecentDeployments } from '../../../api/dashboard';
@@ -9,13 +9,7 @@ import { DeploymentRevisionComponent } from './deployment-revision.component';
 @Component({
   selector: 'app-organization-deployments',
   standalone: true,
-  imports: [
-    CommonModule,
-    HlmCard,
-    HlmCardContent,
-    HlmH3,
-    DeploymentRevisionComponent,
-  ],
+  imports: [HlmCard, HlmCardContent, HlmH3, DeploymentRevisionComponent],
   template: `
     <h3 hlmH3>Recent Deployments</h3>
     <section hlmCard>

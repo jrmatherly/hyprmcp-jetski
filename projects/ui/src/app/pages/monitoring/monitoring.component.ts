@@ -1,6 +1,6 @@
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { HlmButton } from '@spartan-ng/helm/button';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -34,7 +34,6 @@ Chart.register(...registerables);
   selector: 'app-monitoring',
   standalone: true,
   imports: [
-    CommonModule,
     HlmButton,
     NgIcon,
     BrnSelectImports,
