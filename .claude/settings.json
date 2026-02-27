@@ -10,6 +10,16 @@
             "timeout": 10000
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_FILE_PATH\"; if [[ \"$file\" == *.go ]]; then if command -v goimports &>/dev/null; then goimports -w \"$file\" 2>/dev/null; else gofmt -w \"$file\" 2>/dev/null; fi; fi",
+            "timeout": 10000
+          }
+        ]
       }
     ],
     "PreToolUse": [
@@ -19,6 +29,16 @@
           {
             "type": "command",
             "command": "file=\"$CLAUDE_FILE_PATH\"; case \"$file\" in *pnpm-lock.yaml|*go.sum|*.secret.env*) echo 'BLOCK: Do not edit lock files or secret env files directly' >&2; exit 2;; esac",
+            "timeout": 5000
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_FILE_PATH\"; case \"$file\" in *zz_generated*|*applyconfiguration/*) echo 'BLOCK: Do not edit controller-gen generated files. Run: mise run controller-gen' >&2; exit 2;; esac",
             "timeout": 5000
           }
         ]

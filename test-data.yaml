@@ -71,8 +71,8 @@ organizations:
             events:
               - type: progressing
                 ago: 15m
-  - name: glasskube
-    user: pmig@glasskube.com
+  - name: apollosai
+    user: dev@apollosai.dev
     projects:
       - name: weather
         deploymentRevisions:

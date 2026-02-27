@@ -1,10 +1,12 @@
 # Jetski - Project Index
 
-> **Auto-generated**: 2026-02-26 | **Version**: 0.4.4 | **Module**: `github.com/hyprmcp/jetski`
+> **Auto-generated**: 2026-02-27 | **Version**: 0.4.4 | **Repo**: `jrmatherly/hyprmcp-jetski` | **Module**: `github.com/hyprmcp/jetski`
 
 ## Overview
 
 Jetski is an **MCP (Model Context Protocol) Gateway** management platform. It provides a web UI and backend server for managing MCP gateway deployments on Kubernetes, with multi-tenant organization support, analytics, monitoring, and deployment management.
+
+> **Fork note**: This is `jrmatherly/hyprmcp-jetski`, forked from `hyprmcp/jetski`. The Go module path is intentionally kept as `github.com/hyprmcp/jetski`. Brand identity uses `apollosai` / `apollosai.dev`. See `.scratchpad/TODO.md` for remaining migration tasks.
 
 ---
 
@@ -49,12 +51,14 @@ jetski/
 ├── mise.toml                        # Task runner (serve, test, lint, migrate, etc.)
 ├── Dockerfile                       # Multi-stage Go build → distroless
 ├── docker-compose.yaml              # Local dev: Dex + PostgreSQL + Mailpit
+├── .scratchpad/TODO.md              # Fork migration TODOs
 ├── CLAUDE.md                        # AI assistant instructions
 ├── CONTRIBUTING.md                  # Developer setup guide
+├── .mcp.json                        # MCP servers (postgres, angular)
 ├── .claude/                         # Claude Code automations
-│   ├── settings.json                # Hooks: auto-format TS, block lock/secret files
-│   ├── agents/                      # go-reviewer, angular-reviewer subagents
-│   └── skills/                      # /new-component, /deploy-check skills
+│   ├── settings.json                # Hooks: auto-format TS/Go, block lock/secret/generated files
+│   ├── agents/                      # go-reviewer, angular-reviewer, migration-reviewer subagents
+│   └── skills/                      # /new-component, /deploy-check, /new-migration skills
 ├── internal/                        # Go backend packages (28 packages)
 ├── projects/ui/                     # Angular frontend application
 ├── hack/                            # Build/release utility scripts
@@ -307,8 +311,8 @@ mise run serve && pnpm run start      # Launch backend (8080) + frontend (4200)
 **Local Services** (docker-compose):
 | Service | Image | Port | Purpose |
 |---------|-------|------|---------|
-| Dex | ghcr.io/hyprmcp/dex:2.44.0-alpine | 5556 (HTTP), 5557 (gRPC) | OIDC provider |
-| PostgreSQL | postgres:17.5-alpine | 5432 | Database (user: local/local, db: jetski) |
+| Dex | ghcr.io/dexidp/dex:v2.45.0-alpine | 5556 (HTTP), 5557 (gRPC) | OIDC provider |
+| PostgreSQL | postgres:17-alpine | 5432 | Database (user: local/local, db: jetski) |
 | Mailpit | axllent/mailpit:v1.27.10 | 1025 (SMTP), 8025 (Web UI) | Email testing |
 
 ### CI/CD
@@ -320,7 +324,7 @@ mise run serve && pnpm run start      # Launch backend (8080) + frontend (4200)
 4. Build Angular production bundle
 5. Build multi-platform Docker images (amd64 + arm64)
 6. Generate SBOM, sign with Cosign
-7. Push to `ghcr.io/hyprmcp/jetski`
+7. Push to `ghcr.io/jrmatherly/hyprmcp-jetski`
 
 **release-please.yaml** — Semantic versioning with conventional commits:
 - Types: `feat`, `fix`, `chore`, `docs`, `perf`, `build`, `deps`, `ci`, `refactor`, `revert`, `style`, `test`
@@ -405,3 +409,4 @@ Conventional commits: `type(scope): description`
 | `.env.development.local` | Local env vars: DB URL, OIDC config, mailer, gateway config |
 | `renovate.json` | Dependency update automation rules |
 | `release-please-config.json` | Semantic versioning: Go release type, changelog sections |
+| `.mcp.json` | MCP servers for Claude Code (postgres for local DB introspection) |

@@ -1,5 +1,13 @@
 # CLAUDE.md
 
+## Repository Identity
+
+- **Repo**: `jrmatherly/hyprmcp-jetski` (fork of `hyprmcp/jetski`)
+- **Go module path**: Kept as `github.com/hyprmcp/jetski` (148 refs across 59 Go files — intentionally not renamed)
+- **Docker images**: `ghcr.io/jrmatherly/hyprmcp-jetski` (CI builds), `ghcr.io/jrmatherly/mcp-gateway` (gateway)
+- **Brand for test data/emails**: `apollosai` / `apollosai.dev`
+- **Fork migration TODOs**: See `.scratchpad/TODO.md`
+
 ## Development Commands
 
 ### Frontend
@@ -27,6 +35,7 @@
 
 ```bash
 mise install                    # Install tools (node 24, pnpm 10, go 1.25, golangci-lint)
+go install golang.org/x/tools/cmd/goimports@latest  # Go auto-format (used by Claude hook)
 cp .dex.secret.env.example .dex.secret.env  # Fill in GitHub OAuth creds
 docker compose up -d            # Start Dex (:5556), PostgreSQL (:5432), Mailpit (:1025/:8025)
 mise run serve &                # Go backend on :8080
@@ -38,6 +47,7 @@ npm start                       # Angular dev server on :4200 (proxies API to :8
 - **Frontend changes**: Run `npm run format` then `npm run lint`
 - **Go changes**: Run `mise run lint`
 - **Kubernetes API/CRD changes**: Run `mise run controller-gen` then `mise run lint`
+- **SQL migration changes**: Run `hack/validate-migrations.sh` to verify pairing/sequencing
 
 ### Commit Convention
 
@@ -45,9 +55,21 @@ Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`,
 
 ### Claude Code Automations
 
-- **Hooks** (`.claude/settings.json`): Auto-formats TS/HTML/CSS on edit; blocks edits to `pnpm-lock.yaml`, `go.sum`, `*.secret.env`
-- **Subagents**: `go-reviewer` (Go code review), `angular-reviewer` (Angular conventions review)
-- **Skills**: `/new-component <name>` (scaffold Angular component), `/deploy-check` (full FE+BE validation)
+- **Hooks** (`.claude/settings.json`):
+  - Auto-formats TS/HTML/CSS on edit (Prettier)
+  - Auto-formats Go on edit (`goimports` if available, falls back to `gofmt`)
+  - Blocks edits to `pnpm-lock.yaml`, `go.sum`, `*.secret.env`
+  - Blocks edits to controller-gen generated files (`zz_generated*`, `applyconfiguration/`)
+  - A security reminder hook fires when editing `.github/workflows/*.yaml` — informational, not blocking
+- **Subagents**: `go-reviewer` (Go code review), `angular-reviewer` (Angular conventions), `migration-reviewer` (SQL migration safety)
+- **Skills**: `/new-component <name>` (scaffold Angular component), `/deploy-check` (full FE+BE validation), `/new-migration <desc>` (scaffold SQL migration pair)
+- **MCP Servers** (`.mcp.json`): `postgres` (local DB schema introspection), `angular` (official Angular CLI MCP — docs, best practices, examples)
+
+### Upstream Provenance
+
+- Original project by Glasskube (glasskube.com). Legacy references to `glasskube`, `distr.sh`, `jetski-sh` orgs have been cleaned out.
+- GitHub Actions workflows use SHA-pinned versions for supply chain security. When updating, look up the exact commit SHA for each release tag.
+- Dex OIDC uses official `ghcr.io/dexidp/dex` image. Upstream had custom Tailwind-styled login UI — see `.scratchpad/TODO.md` for custom build task.
 
 ## Architecture Overview
 
@@ -112,6 +134,7 @@ import { lucideSun, lucideMoon } from '@ng-icons/lucide';
 - **HTTP Router**: Chi with middleware chain: Context injection → Auth (JWT/OIDC) → Logging → Rate limiting → OTEL
 - **Service Registry**: `internal/svc/Registry` (DB pool, logger, tracers, JWT keyset, mailer, K8s client)
 - **Database**: PostgreSQL via pgx, 7 migrations in `internal/migrations/sql/`
+- **Migration naming**: `{N}_{description}.up.sql` + `.down.sql` (0-indexed, sequential, no gaps)
 - **Kubernetes**: MCPGateway CRD (v1alpha1), managed by metacontroller
 - **Frontend embedding**: Angular build embedded into Go binary via `internal/frontend/BrowserFS()`
 - **Auth**: Dex (federated OIDC provider), configured in `docker-compose.yaml`

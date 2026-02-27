@@ -1,6 +1,6 @@
 # Project Index: Jetski
 
-Generated: 2026-02-26 | Version: 0.4.4 | Module: `github.com/hyprmcp/jetski`
+Generated: 2026-02-27 | Version: 0.4.4 | Repo: `jrmatherly/hyprmcp-jetski` | Module: `github.com/hyprmcp/jetski`
 
 ## Project Structure
 
@@ -35,11 +35,13 @@ jetski/
 │       ├── services/          # ContextService, ThemeService
 │       ├── pipes/             # ColorPipe, RelativeDatePipe, HighlightJsonPipe
 │       └── libs/ui/           # 16 Spartan/Helm UI component packages
+├── .mcp.json                  # MCP servers (postgres for DB introspection)
 ├── .claude/                   # Claude Code automations
-│   ├── settings.json          # Hooks: auto-format TS, block lock/secret files
-│   ├── agents/                # go-reviewer, angular-reviewer
-│   └── skills/                # /new-component, /deploy-check
+│   ├── settings.json          # Hooks: auto-format TS/Go, block lock/secret/generated files
+│   ├── agents/                # go-reviewer, angular-reviewer, migration-reviewer
+│   └── skills/                # /new-component, /deploy-check, /new-migration
 ├── hack/                      # Build scripts (sentry, migrations, version)
+├── .scratchpad/TODO.md         # Fork migration TODOs
 ├── docker-compose.yaml        # Local dev: Dex + PostgreSQL + Mailpit
 ├── Dockerfile                 # Multi-stage → distroless
 └── .github/workflows/         # CI: build, release-please, semantic-pr
@@ -83,7 +85,7 @@ jetski/
 
 - `mise.toml`: Tools (node 24, pnpm 10, go 1.25, golangci-lint 2.8) + tasks
 - `angular.json`: Build output → `internal/frontend/dist/ui`, budgets 500kB/1MB
-- `docker-compose.yaml`: Dex (:5556), PostgreSQL (:5432), Mailpit (:1025/:8025)
+- `docker-compose.yaml`: Dex v2.45.0 (:5556), PostgreSQL 17 (:5432), Mailpit (:1025/:8025)
 - `.env.development.local`: DB URL, OIDC, mailer, gateway config
 - `renovate.json`: Auto-merge stable deps, group OTEL/Spartan
 - `release-please-config.json`: Go release type, conventional commits
@@ -103,9 +105,10 @@ mise run serve && npm start          # Backend :8080 + Frontend :4200
 
 ## Claude Code Automations
 
-- **Hooks**: Auto-format TS/HTML/CSS on edit; block `pnpm-lock.yaml`, `go.sum`, `*.secret.env`
-- **Subagents**: `go-reviewer` (Go patterns, SQL injection, K8s), `angular-reviewer` (standalone, zoneless, signals)
-- **Skills**: `/new-component <name>` (scaffold), `/deploy-check` (full FE+BE validation)
+- **Hooks**: Auto-format TS/HTML/CSS (Prettier) + Go (`goimports`/`gofmt`) on edit; block `pnpm-lock.yaml`, `go.sum`, `*.secret.env`, `zz_generated*`, `applyconfiguration/`
+- **Subagents**: `go-reviewer` (Go patterns, SQL injection, K8s), `angular-reviewer` (standalone, zoneless, signals), `migration-reviewer` (SQL migration safety)
+- **Skills**: `/new-component <name>` (scaffold component), `/deploy-check` (full FE+BE validation), `/new-migration <desc>` (scaffold SQL migration pair)
+- **MCP Servers** (`.mcp.json`): `postgres` (local DB schema introspection), `angular` (official Angular CLI MCP — docs, best practices, examples)
 
 ## Dev Commands
 

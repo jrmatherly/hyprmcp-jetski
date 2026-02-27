@@ -12,7 +12,8 @@ if [ -z "$VERSION" ]; then
   exit 1
 fi
 
-export SENTRY_ORG="glasskube"
+# TODO: Configure Sentry org when Sentry integration is set up
+export SENTRY_ORG="apollosai"
 export SENTRY_PROJECT="jetski-frontend"
 
 npx sentry-cli releases new "$VERSION"

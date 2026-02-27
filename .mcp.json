@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgres://local:local@localhost:5432/jetski"
+      ]
+    },
+    "angular": {
+      "command": "npx",
+      "args": [
+        "@angular/cli",
+        "mcp"
+      ]
+    }
+  }
+}

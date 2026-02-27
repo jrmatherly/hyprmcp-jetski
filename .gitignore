@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 
 .dex.secret.env
+
+.scratchpad/

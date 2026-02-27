@@ -77,7 +77,7 @@ func Initialize() {
 
 	gatewayContainerImageTag = envutil.GetEnvOrDefault(
 		"GATEWAY_CONTAINER_IMAGE_TAG",
-		"ghcr.io/jetski-sh/mcp-proxy:0.1.0-alpha.4",
+		"ghcr.io/jrmatherly/mcp-gateway:latest", // TODO: Build and publish mcp-gateway image under jrmatherly org
 	)
 	gatewayWebhookURL = envutil.GetEnvOrDefault("GATEWAY_WEBHOOK_URL", "http://host.minikube.internal:8085/sync")
 	gatewayNamespace = envutil.GetEnvOrDefault("GATEWAY_NAMESPACE", "default")

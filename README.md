@@ -1,9 +1,9 @@
-[![GitHub Repo stars](https://img.shields.io/github/stars/hyprmcp/jetski?style=flat)](https://github.com/hyprmcp/jetski)
+[![GitHub Repo stars](https://img.shields.io/github/stars/jrmatherly/hyprmcp-jetski?style=flat)](https://github.com/jrmatherly/hyprmcp-jetski)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Docs](https://img.shields.io/badge/docs-hyprmcp.com%2Fdocs-blue)](https://hyprmcp.com/docs/getting-started/?utm_source=github)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Discord](https://img.shields.io/badge/HyprMCP-Discord-%235865F2.svg)](https://discord.gg/CgZ775fcsy)
-[![Downloads](https://img.shields.io/github/downloads/hyprmcp/jetski/total)](https://github.com/hyprmcp/jetski/releases)
+[![Downloads](https://img.shields.io/github/downloads/jrmatherly/hyprmcp-jetski/total)](https://github.com/jrmatherly/hyprmcp-jetski/releases)
 [![Go Reference](https://pkg.go.dev/badge/github.com/hyprmcp/jetski)](https://pkg.go.dev/github.com/hyprmcp/jetski)
 [![Go Report Card](https://goreportcard.com/badge/github.com/hyprmcp/jetski)](https://goreportcard.com/report/github.com/hyprmcp/jetski)
 
@@ -22,11 +22,9 @@
     <br> <br>
     <a href="https://hyprmcp.com/docs/"><strong>Read the docs »</strong></a>
     <br> <br>
-    <a href="https://github.com/hyprmcp" target="_blank">GitHub</a>
+    <a href="https://github.com/jrmatherly/hyprmcp-jetski" target="_blank">GitHub</a>
     .
-    <a href="https://www.linkedin.com/company/glasskube/" target="_blank">LinkedIn</a>
-    .
-     <a href="https://x.com/intent/follow?screen_name=glasskube" target="_blank">Twitter / X</a>
+    <a href="https://github.com/hyprmcp" target="_blank">Upstream</a>
   </p>
 </div>
 
@@ -50,18 +48,18 @@ It also collects and aggregates all analytics and metrics data captured by the g
 
 ## 🗄️ Table Of Contents
 
-- [What is Jetski?](https://github.com/hyprmcp/jetski#-what-is-jetski)
-- [Features](https://github.com/hyprmcp/jetski#-features)
-- [Quick Start](https://github.com/hyprmcp/jetski#-quick-start---get-started-in-minutes)
-- [Demo Video](https://github.com/hyprmcp/jetski#-hyprmcp-demo-video)
-- [HyprMCP Components](https://github.com/hyprmcp/jetski#-hyprmcp-components)
-- [Architecture Diagram](https://github.com/hyprmcp/jetski#architecture-diagram)
-- [Need Help?](https://github.com/hyprmcp/jetski#-need-help-or-want-to-provide-feedback)
-- [Used Projects](https://github.com/hyprmcp/jetski#-used-projects)
-- [How to Contribute](https://github.com/hyprmcp/jetski#-how-to-contribute-to-hyprmcp)
-- [Contributors](https://github.com/hyprmcp/jetski#-thanks-to-all-our-contributors)
-- [Activity](https://github.com/hyprmcp/jetski#-activity)
-- [License](https://github.com/hyprmcp/jetski#-license)
+- [What is Jetski?](https://github.com/jrmatherly/hyprmcp-jetski#-what-is-jetski)
+- [Features](https://github.com/jrmatherly/hyprmcp-jetski#-features)
+- [Quick Start](https://github.com/jrmatherly/hyprmcp-jetski#-quick-start---get-started-in-minutes)
+- [Demo Video](https://github.com/jrmatherly/hyprmcp-jetski#-hyprmcp-demo-video)
+- [HyprMCP Components](https://github.com/jrmatherly/hyprmcp-jetski#-hyprmcp-components)
+- [Architecture Diagram](https://github.com/jrmatherly/hyprmcp-jetski#architecture-diagram)
+- [Need Help?](https://github.com/jrmatherly/hyprmcp-jetski#-need-help-or-want-to-provide-feedback)
+- [Used Projects](https://github.com/jrmatherly/hyprmcp-jetski#-used-projects)
+- [How to Contribute](https://github.com/jrmatherly/hyprmcp-jetski#-how-to-contribute-to-hyprmcp)
+- [Contributors](https://github.com/jrmatherly/hyprmcp-jetski#-thanks-to-all-our-contributors)
+- [Activity](https://github.com/jrmatherly/hyprmcp-jetski#-activity)
+- [License](https://github.com/jrmatherly/hyprmcp-jetski#-license)
 
 ## ✨ Features
 
@@ -83,8 +81,8 @@ HyprMCP uses [mise](https://mise.jdx.dev/) to configure your development environ
 
 **Clone the repository:**
   ```bash
-  git clone https://github.com/hyprmcp/jetski.git
-  cd jetski
+  git clone https://github.com/jrmatherly/hyprmcp-jetski.git
+  cd hyprmcp-jetski
   ```
 
 **Install dependencies:**
@@ -189,7 +187,7 @@ graph LR
 ## ☝️ Need Help or Want to Provide Feedback?
 
 If you encounter any problems, we will be happy to support you wherever we can on our [Discord](https://discord.gg/CgZ775fcsy).
-For bugs, issues or feature requests feel free to [open an issue](https://github.com/hyprmcp/jetski/issues/new/choose).
+For bugs, issues or feature requests feel free to [open an issue](https://github.com/jrmatherly/hyprmcp-jetski/issues/new/choose).
 We are happy to assist you with anything related to the project.
 
 ## 📎 Used Projects
@@ -225,10 +223,10 @@ Whether you want to:
 
 We welcome all contributions!
 
-## 👾 Activity
-
-![HyprMCP Activity](https://repobeats.axiom.co/api/embed/bb99848dce085afb2ed699790547856069d369cc.svg "HyprMCP activity image")
-
 ## 📘 License
 
-Jetski is licensed under the MIT license. For more information check the [LICENSE](https://github.com/hyprmcp/jetski/blob/main/LICENSE) file for details.
+Jetski is licensed under the MIT license. For more information check the [LICENSE](https://github.com/jrmatherly/hyprmcp-jetski/blob/main/LICENSE) file for details.
+
+---
+
+> This project is a fork of [hyprmcp/jetski](https://github.com/hyprmcp/jetski).

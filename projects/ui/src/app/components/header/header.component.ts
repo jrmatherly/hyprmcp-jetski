@@ -135,7 +135,7 @@ import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
         <div class="flex items-center space-x-4">
           <!-- Feedback -->
           <a
-            href="mailto:founders@glasskube.com?subject=Hyprmcp%20Feedback"
+            href="mailto:dev@apollosai.dev?subject=HyprMCP%20Jetski%20Feedback"
             class="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Feedback
