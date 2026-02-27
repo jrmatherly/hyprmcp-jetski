@@ -40,3 +40,17 @@ linters:
           - gosec
         path: internal/svc/db_pool\.go
         text: "G115"
+      # Upstream code: Password fields in config structs (env vars, SMTP config)
+      - linters:
+          - gosec
+        path: internal/env/types\.go
+        text: "G117"
+      - linters:
+          - gosec
+        path: internal/mail/smtp/mailer\.go
+        text: "G117"
+      # Upstream code: MCP endpoint verification uses user-provided URL by design
+      - linters:
+          - gosec
+        path: internal/handlers/projects\.go
+        text: "G704"
