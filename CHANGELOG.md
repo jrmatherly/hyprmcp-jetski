@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/jrmatherly/hyprmcp-jetski/compare/0.4.4...0.5.0) (2026-02-27)
+
+
+### Features
+
+* Introduce Claude AI migration tooling and update project branding for forked repository. ([db657b2](https://github.com/jrmatherly/hyprmcp-jetski/commit/db657b2314945a62b86b94a4d55fcd33ca378146))
+
 ## [0.4.4](https://github.com/hyprmcp/jetski/compare/0.4.3...0.4.4) (2026-01-12)
 
 
