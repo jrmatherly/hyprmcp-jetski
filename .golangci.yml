@@ -1,0 +1,42 @@
+version: "2"
+
+linters:
+  default: standard
+  enable:
+    - gosec
+
+  exclusions:
+    rules:
+      - linters:
+          - gosec
+        path: _test\.go
+      # Upstream code: weak RNG and int overflow in test data generator
+      - linters:
+          - gosec
+        path: internal/cmd/generate\.go
+        text: "G404|G115"
+      # Upstream code: intentional unsafe HTML template helpers (explicitly named Unsafe*)
+      - linters:
+          - gosec
+        path: internal/mailtemplates/
+        text: "G203"
+      # Upstream code: standard config file loading via variable
+      - linters:
+          - gosec
+        path: internal/gatewayconfig/
+        text: "G304"
+      # Upstream code: HTTP server without ReadHeaderTimeout (Slowloris)
+      - linters:
+          - gosec
+        path: internal/server/
+        text: "G112"
+      # Upstream code: OIDC discovery URL from config
+      - linters:
+          - gosec
+        path: internal/svc/oidc\.go
+        text: "G107"
+      # Upstream code: int overflow in DB pool config
+      - linters:
+          - gosec
+        path: internal/svc/db_pool\.go
+        text: "G115"
