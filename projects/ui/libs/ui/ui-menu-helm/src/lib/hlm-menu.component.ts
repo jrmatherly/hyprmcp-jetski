@@ -1,4 +1,4 @@
-import { BrnMenu } from '@spartan-ng/brain/menu';
+import { CdkMenu } from '@angular/cdk/menu';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -31,7 +31,7 @@ type MenuVariants = VariantProps<typeof menuVariants>;
   host: {
     '[class]': '_computedClass()',
   },
-  hostDirectives: [BrnMenu],
+  hostDirectives: [CdkMenu],
   template: ` <ng-content /> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

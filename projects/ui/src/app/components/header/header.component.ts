@@ -1,5 +1,6 @@
-import { BrnMenuTrigger } from '@spartan-ng/brain/menu';
-import { CommonModule } from '@angular/common';
+import { CdkMenuTrigger } from '@angular/cdk/menu';
+import { type ConnectedPosition } from '@angular/cdk/overlay';
+
 import { Component, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -26,13 +27,11 @@ import {
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ContextService } from '../../services/context.service';
 import { ThemeService } from '../../services/theme.service';
-import { HlmTooltip, HlmTooltipTrigger } from '@spartan-ng/helm/tooltip';
-import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
+import { BrnTooltip } from '@spartan-ng/brain/tooltip';
 
 @Component({
   selector: 'app-header',
   imports: [
-    CommonModule,
     FormsModule,
     HlmButton,
     RouterLink,
@@ -43,11 +42,9 @@ import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
     HlmMenuGroup,
     HlmMenuItemSubIndicator,
     HlmSubMenu,
-    BrnMenuTrigger,
+    CdkMenuTrigger,
     NgIcon,
-    HlmTooltip,
-    BrnTooltipContentTemplate,
-    HlmTooltipTrigger,
+    BrnTooltip,
   ],
   viewProviders: [
     provideIcons({
@@ -75,7 +72,7 @@ import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
           @if (contextService.organizations().length !== 0) {
             <button
               class="flex items-center gap-2 px-4 py-2 -my-2 rounded hover:bg-muted transition-colors group"
-              [brnMenuTriggerFor]="projectMenu"
+              [cdkMenuTriggerFor]="projectMenu"
             >
               <span
                 class="font-semibold text-lg text-muted-foreground group-hover:text-foreground transition-colors"
@@ -106,7 +103,7 @@ import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
                   [routerLink]="['/', org.name]"
                   class="cursor-pointer"
                   hlmMenuItem
-                  [brnMenuTriggerFor]="projects"
+                  [cdkMenuTriggerFor]="projects"
                 >
                   {{ org.name }}
                   <hlm-menu-item-sub-indicator />
@@ -153,8 +150,8 @@ import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
           <!-- "Add new…" dropdown -->
           <button
             class="flex items-center gap-2 py-2 px-3 bg-foreground text-sm text-background font-medium rounded-md transition-colors cursor-pointer"
-            [brnMenuTriggerFor]="addNewMenu"
-            align="end"
+            [cdkMenuTriggerFor]="addNewMenu"
+            [cdkMenuPosition]="menuAlignEnd"
           >
             Add new&hellip;
             <ng-icon name="lucideChevronDown" size="16" />
@@ -175,23 +172,20 @@ import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
               @if (contextService.selectedOrg(); as o) {
                 <hlm-menu-separator />
                 <hlm-menu-group>
-                  <hlm-tooltip>
-                    <div hlmTooltipTrigger position="left">
-                      <a
-                        hlmMenuItem
-                        class="w-full"
-                        [routerLink]="['/' + o.name, 'new']"
-                        [disabled]="true"
-                      >
-                        New project in {{ o.name }}
-                      </a>
-                    </div>
-                    <span *brnTooltipContent
-                      >Multiple projects per organization<br />are only
-                      available in HyprMCP Pro.<br />You can create multiple
-                      organizations.</span
-                    >
-                  </hlm-tooltip>
+                  <a
+                    hlmMenuItem
+                    class="w-full"
+                    [routerLink]="['/' + o.name, 'new']"
+                    [disabled]="true"
+                    [brnTooltip]="proTooltip"
+                    position="left"
+                  >
+                    New project in {{ o.name }}
+                  </a>
+                  <ng-template #proTooltip>
+                    Multiple projects per organization<br />are only available
+                    in HyprMCP Pro.<br />You can create multiple organizations.
+                  </ng-template>
                   <a
                     hlmMenuItem
                     class="w-full cursor-pointer"
@@ -208,7 +202,7 @@ import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
           <div class="relative">
             <button
               class="flex items-center space-x-2 p-1 hover:bg-muted rounded-md transition-colors"
-              [brnMenuTriggerFor]="userMenu"
+              [cdkMenuTriggerFor]="userMenu"
             >
               <div
                 class="w-8 h-8 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full"
@@ -248,6 +242,10 @@ import { BrnTooltipContentTemplate } from '@spartan-ng/brain/tooltip';
 export class HeaderComponent {
   public themeService = inject(ThemeService);
   private readonly oauthService = inject(OAuthService);
+
+  protected readonly menuAlignEnd: ConnectedPosition[] = [
+    { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
+  ];
   protected readonly contextService = inject(ContextService);
   protected readonly userData = this.oauthService.getIdentityClaims();
   protected readonly userEmail = computed(() => {

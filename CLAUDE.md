@@ -63,6 +63,13 @@ Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`,
 - Merge with: `gh pr merge <n> --repo jrmatherly/hyprmcp-jetski --merge`
 - Verify release: `gh release list --repo jrmatherly/hyprmcp-jetski`
 
+### Security Scanning
+
+- **CodeQL** (`.github/workflows/security.yaml`): Semantic SAST for Go (autobuild) and TypeScript (no-build), `security-and-quality` query suite, results in GitHub Security tab
+- **govulncheck** (same workflow): Go dependency vulnerability scanning with call-graph analysis — only alerts on CVEs your code actually invokes. SARIF output uploaded to Security tab
+- **gosec** (via golangci-lint, `.golangci.yml`): Hardcoded credentials, insecure crypto, weak TLS. Runs as part of `mise run lint`. Upstream code suppressions documented in `.scratchpad/TODO.md`
+- Scheduled weekly scan (Monday 6 AM UTC) catches newly disclosed vulnerabilities in existing code
+
 ### Claude Code Automations
 
 - **Hooks** (`.claude/settings.json`):
@@ -72,7 +79,7 @@ Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`,
   - Blocks edits to controller-gen generated files (`zz_generated*`, `applyconfiguration/`)
   - A security reminder hook fires when editing `.github/workflows/*.yaml` — informational, not blocking
 - **Subagents**: `go-reviewer` (Go code review), `angular-reviewer` (Angular conventions), `migration-reviewer` (SQL migration safety)
-- **Skills**: `/new-component <name>` (scaffold Angular component), `/deploy-check` (full FE+BE validation), `/new-migration <desc>` (scaffold SQL migration pair)
+- **Skills**: `/new-component <name>` (scaffold Angular component), `/deploy-check` (full FE+BE validation), `/new-migration <desc>` (scaffold SQL migration pair), `dev-standards` (auto-invoked development discipline guardrails)
 - **MCP Servers** (`.mcp.json`): `postgres` (local DB schema introspection), `angular` (official Angular CLI MCP — docs, best practices, examples)
 
 ### Upstream Provenance
@@ -83,7 +90,7 @@ Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`,
 
 ## Architecture Overview
 
-### Frontend (Angular 20)
+### Frontend (Angular 21)
 
 - **Zoneless** change detection (`provideZonelessChangeDetection()`)
 - **Standalone components** only (no NgModules)

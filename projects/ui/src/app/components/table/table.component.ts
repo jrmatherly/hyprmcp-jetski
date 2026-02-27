@@ -2,7 +2,8 @@ import { Component, computed, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronDown, lucideRotateCcw } from '@ng-icons/lucide';
-import { BrnMenuTrigger } from '@spartan-ng/brain/menu';
+import { CdkMenuTrigger } from '@angular/cdk/menu';
+import { type ConnectedPosition } from '@angular/cdk/overlay';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmButtonModule } from '@spartan-ng/helm/button';
 import { HlmIcon } from '@spartan-ng/helm/icon';
@@ -17,7 +18,7 @@ import { ColumnDef, FlexRenderDirective, Table } from '@tanstack/angular-table';
   imports: [
     FlexRenderDirective,
     FormsModule,
-    BrnMenuTrigger,
+    CdkMenuTrigger,
     HlmMenuModule,
     HlmButtonModule,
     NgIcon,
@@ -37,8 +38,8 @@ import { ColumnDef, FlexRenderDirective, Table } from '@tanstack/angular-table';
             <button
               hlmBtn
               variant="outline"
-              align="end"
-              [brnMenuTriggerFor]="menu"
+              [cdkMenuPosition]="menuAlignEnd"
+              [cdkMenuTriggerFor]="menu"
             >
               Columns
               <ng-icon hlm name="lucideChevronDown" class="ml-2" size="sm" />
@@ -177,6 +178,10 @@ import { ColumnDef, FlexRenderDirective, Table } from '@tanstack/angular-table';
     </div>`,
 })
 export class TableComponent<T> {
+  protected readonly menuAlignEnd: ConnectedPosition[] = [
+    { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
+  ];
+
   public readonly table = input.required<Table<T>>();
   public readonly columns = input.required<ColumnDef<T>[]>();
   public readonly availablePageSizes = input<number[]>([10, 20, 50, 100]);

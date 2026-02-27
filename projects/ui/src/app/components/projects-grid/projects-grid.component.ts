@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { HlmCardContent, HlmCard } from '@spartan-ng/helm/card';
 import { HlmH3 } from '@spartan-ng/helm/typography';
 import { RelativeDatePipe } from '../../pipes/relative-date-pipe';
@@ -11,14 +11,7 @@ import { getProjectUrl } from '../../../api/project';
 @Component({
   selector: 'app-projects-grid',
   standalone: true,
-  imports: [
-    CommonModule,
-    HlmCard,
-    HlmCardContent,
-    HlmH3,
-    RelativeDatePipe,
-    RouterLink,
-  ],
+  imports: [HlmCard, HlmCardContent, HlmH3, RelativeDatePipe, RouterLink],
   template: `
     <div>
       <h3 hlmH3>Projects</h3>

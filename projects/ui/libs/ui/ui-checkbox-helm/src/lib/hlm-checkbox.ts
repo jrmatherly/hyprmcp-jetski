@@ -34,7 +34,7 @@ export const HLM_CHECKBOX_VALUE_ACCESSOR = {
       [id]="id()"
       [name]="name()"
       [class]="_computedClass()"
-      [checked]="checked()"
+      [checked]="checked() === true"
       [disabled]="_state().disabled()"
       [required]="required()"
       [aria-label]="ariaLabel()"

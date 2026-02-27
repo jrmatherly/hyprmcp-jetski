@@ -1,5 +1,5 @@
 import { BrnDialogImports } from '@spartan-ng/brain/dialog';
-import { CommonModule } from '@angular/common';
+
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal, viewChild } from '@angular/core';
 import {
@@ -28,7 +28,6 @@ import { ContextService } from '../../services/context.service';
   selector: 'app-organization-settings-members',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     HlmH3,
     HlmButton,
