@@ -1,4 +1,4 @@
-import { BrnMenuItem } from '@spartan-ng/brain/menu';
+import { CdkMenuItem } from '@angular/cdk/menu';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { booleanAttribute, computed, Directive, input } from '@angular/core';
 import { hlm } from '@spartan-ng/helm/utils';
@@ -14,9 +14,9 @@ import { ClassValue } from 'clsx';
   },
   hostDirectives: [
     {
-      directive: BrnMenuItem,
-      inputs: ['disabled: disabled'],
-      outputs: ['triggered: triggered'],
+      directive: CdkMenuItem,
+      inputs: ['cdkMenuItemDisabled: disabled'],
+      outputs: ['cdkMenuItemTriggered: triggered'],
     },
   ],
 })

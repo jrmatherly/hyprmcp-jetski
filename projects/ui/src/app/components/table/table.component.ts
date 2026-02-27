@@ -2,7 +2,7 @@ import { Component, computed, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronDown, lucideRotateCcw } from '@ng-icons/lucide';
-import { BrnMenuTrigger } from '@spartan-ng/brain/menu';
+import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmButtonModule } from '@spartan-ng/helm/button';
 import { HlmIcon } from '@spartan-ng/helm/icon';
@@ -17,7 +17,7 @@ import { ColumnDef, FlexRenderDirective, Table } from '@tanstack/angular-table';
   imports: [
     FlexRenderDirective,
     FormsModule,
-    BrnMenuTrigger,
+    CdkMenuTrigger,
     HlmMenuModule,
     HlmButtonModule,
     NgIcon,
@@ -38,7 +38,7 @@ import { ColumnDef, FlexRenderDirective, Table } from '@tanstack/angular-table';
               hlmBtn
               variant="outline"
               align="end"
-              [brnMenuTriggerFor]="menu"
+              [cdkMenuTriggerFor]="menu"
             >
               Columns
               <ng-icon hlm name="lucideChevronDown" class="ml-2" size="sm" />

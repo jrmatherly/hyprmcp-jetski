@@ -1,4 +1,4 @@
-import { BrnMenuGroup } from '@spartan-ng/brain/menu';
+import { CdkMenuGroup } from '@angular/cdk/menu';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   host: {
     class: 'block',
   },
-  hostDirectives: [BrnMenuGroup],
+  hostDirectives: [CdkMenuGroup],
   template: ` <ng-content /> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

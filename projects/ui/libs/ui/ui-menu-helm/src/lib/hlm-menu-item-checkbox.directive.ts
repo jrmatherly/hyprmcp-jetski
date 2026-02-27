@@ -1,4 +1,4 @@
-import { BrnMenuItemCheckbox } from '@spartan-ng/brain/menu';
+import { CdkMenuItemCheckbox } from '@angular/cdk/menu';
 import { Directive, computed, input } from '@angular/core';
 import { hlm } from '@spartan-ng/helm/utils';
 
@@ -11,9 +11,9 @@ import type { ClassValue } from 'clsx';
   },
   hostDirectives: [
     {
-      directive: BrnMenuItemCheckbox,
-      inputs: ['disabled: disabled', 'checked: checked'],
-      outputs: ['triggered: triggered'],
+      directive: CdkMenuItemCheckbox,
+      inputs: ['cdkMenuItemDisabled: disabled', 'cdkMenuItemChecked: checked'],
+      outputs: ['cdkMenuItemTriggered: triggered'],
     },
   ],
 })

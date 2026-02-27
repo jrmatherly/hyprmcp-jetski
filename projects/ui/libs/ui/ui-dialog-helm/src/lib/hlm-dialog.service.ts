@@ -1,7 +1,7 @@
 import {
   type BrnDialogOptions,
   BrnDialogService,
-  DEFAULT_BRN_DIALOG_OPTIONS,
+  defaultOptions as DEFAULT_BRN_DIALOG_OPTIONS,
   cssClassesToArray,
 } from '@spartan-ng/brain/dialog';
 import type { ComponentType } from '@angular/cdk/portal';

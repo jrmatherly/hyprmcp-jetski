@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { BrnTooltipTrigger, provideBrnTooltipDefaultOptions } from '@spartan-ng/brain/tooltip';
+import { BrnTooltip, provideBrnTooltipDefaultOptions } from '@spartan-ng/brain/tooltip';
 
 export const DEFAULT_TOOLTIP_CONTENT_CLASSES =
 	'bg-primary text-primary-foreground animate-in fade-in-0 zoom-in-95 z-50 w-fit rounded-md px-3 py-1.5 text-xs text-balance ' +
@@ -14,23 +14,18 @@ export const DEFAULT_TOOLTIP_CONTENT_CLASSES =
 		provideBrnTooltipDefaultOptions({
 			showDelay: 150,
 			hideDelay: 300,
-			exitAnimationDuration: 150,
 			tooltipContentClasses: DEFAULT_TOOLTIP_CONTENT_CLASSES,
 		}),
 	],
 	hostDirectives: [
 		{
-			directive: BrnTooltipTrigger,
+			directive: BrnTooltip,
 			inputs: [
-				'brnTooltipDisabled: hlmTooltipDisabled',
-				'brnTooltipTrigger: hlmTooltipTrigger',
-				'aria-describedby',
+				'tooltipDisabled: hlmTooltipDisabled',
+				'brnTooltip: hlmTooltipTrigger',
 				'position',
-				'positionAtOrigin',
 				'hideDelay',
 				'showDelay',
-				'exitAnimationDuration',
-				'touchGestures',
 			],
 		},
 	],
