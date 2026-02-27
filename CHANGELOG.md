@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/jrmatherly/hyprmcp-jetski/compare/0.6.1...0.7.0) (2026-02-27)
+
+
+### Features
+
+* Add Claude AI skills for security checks and dependency upgrades, refine Renovate configuration, and update project metadata. ([227596e](https://github.com/jrmatherly/hyprmcp-jetski/commit/227596e80f254df74e8776693ee5e15dc1f4a6b4))
+
 ## [0.6.1](https://github.com/jrmatherly/hyprmcp-jetski/compare/0.6.0...0.6.1) (2026-02-27)
 
 
