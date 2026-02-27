@@ -42,6 +42,16 @@
             "timeout": 5000
           }
         ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_FILE_PATH\"; if echo \"$file\" | grep -qE 'internal/migrations/sql/[0-6]_'; then echo 'BLOCK: Do not edit existing migrations (0-6). Create a new migration with /new-migration' >&2; exit 2; fi",
+            "timeout": 5000
+          }
+        ]
       }
     ]
   }

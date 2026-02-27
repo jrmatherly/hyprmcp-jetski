@@ -1,8 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": [
+    "Go module path is intentionally github.com/hyprmcp/jetski (upstream fork), NOT the actual repo path.",
+    "gomodUpdateImportPaths is excluded to prevent any source file import path modifications."
+  ],
   "extends": ["config:best-practices"],
   "timezone": "America/New_York",
-  "postUpdateOptions": ["gomodTidy", "gomodUpdateImportPaths", "pnpmDedupe"],
+  "postUpdateOptions": ["gomodTidy", "pnpmDedupe"],
   "packageRules": [
     {
       "description": "Automerge stable devDependency minor/patch updates",
@@ -38,20 +42,57 @@
       "schedule": ["* 6-9 * * 1"]
     },
     {
+      "description": "Group OpenTelemetry Go core packages — must be bumped in lockstep (otel, sdk, trace, metric, exporters)",
       "extends": ["monorepo:opentelemetry-go"],
       "groupName": "opentelemetry-go monorepo",
       "matchUpdateTypes": ["digest", "patch", "minor", "major"]
     },
     {
+      "description": "Group OpenTelemetry Go contrib packages — must match core OTEL version (otelhttp, otelaws, otelpgx)",
       "extends": ["monorepo:opentelemetry-go-contrib"],
       "groupName": "opentelemetry-go-contrib monorepo",
       "matchUpdateTypes": ["digest", "patch", "minor", "major"]
     },
     {
-      "description": "Group all @spartan-ng dependencies together",
+      "description": "Group AWS SDK v2 packages — core and service packages must be bumped together",
+      "matchManagers": ["gomod"],
+      "matchPackageNames": ["/^github\\.com\\/aws\\/aws-sdk-go-v2/"],
+      "groupName": "aws-sdk-go-v2"
+    },
+    {
+      "description": "Group Kubernetes client packages — k8s.io/api, apimachinery, client-go, cli-runtime must match versions",
+      "matchManagers": ["gomod"],
+      "matchPackageNames": [
+        "k8s.io/api",
+        "k8s.io/apimachinery",
+        "k8s.io/client-go",
+        "k8s.io/cli-runtime"
+      ],
+      "groupName": "kubernetes-client"
+    },
+    {
+      "description": "Group Sentry Go packages — sentry-go and sentry-go/otel must stay in sync",
+      "matchManagers": ["gomod"],
+      "matchPackageNames": ["/^github\\.com\\/getsentry\\/sentry-go/"],
+      "groupName": "sentry-go"
+    },
+    {
+      "description": "Group all @spartan-ng packages — alpha releases, must match Angular version compatibility",
       "matchManagers": ["npm"],
       "matchPackageNames": ["/^@spartan-ng//"],
       "groupName": "@spartan-ng packages"
+    },
+    {
+      "description": "Group Angular core packages — all @angular/* packages must be on the same version",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["/^@angular//"],
+      "groupName": "@angular packages"
+    },
+    {
+      "description": "Ignore metacontroller — uses replace directive pointing to github.com/metacontroller/metacontroller, not a real versioned dependency",
+      "matchManagers": ["gomod"],
+      "matchPackageNames": ["metacontroller"],
+      "enabled": false
     }
   ]
 }

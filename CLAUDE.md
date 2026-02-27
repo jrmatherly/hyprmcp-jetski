@@ -7,6 +7,7 @@
 - **Docker images**: `ghcr.io/jrmatherly/hyprmcp-jetski` (CI builds), `ghcr.io/jrmatherly/mcp-gateway` (gateway)
 - **Brand for test data/emails**: `apollosai` / `apollosai.dev`
 - **Fork migration TODOs**: See `.scratchpad/TODO.md`
+- **`.scratchpad/`** is local-only (gitignored) — never `git add` files from it
 
 ## Development Commands
 
@@ -42,6 +43,8 @@ mise run serve &                # Go backend on :8080
 npm start                       # Angular dev server on :4200 (proxies API to :8080)
 ```
 
+**Startup order matters**: Docker (PostgreSQL) → Go backend (`mise run serve`) → Angular dev server (`npm start`). The backend panics without PostgreSQL, and the frontend proxy fails without the backend.
+
 ### Post-Change Checklist
 
 - **Frontend changes**: Run `npm run format` then `npm run lint`
@@ -62,6 +65,7 @@ Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`,
 - `feat:` → minor bump, `fix:` → patch bump, `!` suffix → major bump
 - Merge with: `gh pr merge <n> --repo jrmatherly/hyprmcp-jetski --merge`
 - Verify release: `gh release list --repo jrmatherly/hyprmcp-jetski`
+- **Do not delete** the `release-please--branches--main` remote branch — it is managed by the release-please action
 
 ### Security Scanning
 
@@ -77,10 +81,11 @@ Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`,
   - Auto-formats Go on edit (`goimports` if available, falls back to `gofmt`)
   - Blocks edits to `pnpm-lock.yaml`, `go.sum`, `*.secret.env`
   - Blocks edits to controller-gen generated files (`zz_generated*`, `applyconfiguration/`)
+  - Blocks edits to existing migrations (0-6) — use `/new-migration` for new migrations
   - A security reminder hook fires when editing `.github/workflows/*.yaml` — informational, not blocking
-- **Subagents**: `go-reviewer` (Go code review), `angular-reviewer` (Angular conventions), `migration-reviewer` (SQL migration safety)
-- **Skills**: `/new-component <name>` (scaffold Angular component), `/deploy-check` (full FE+BE validation), `/new-migration <desc>` (scaffold SQL migration pair), `dev-standards` (auto-invoked development discipline guardrails)
-- **MCP Servers** (`.mcp.json`): `postgres` (local DB schema introspection), `angular` (official Angular CLI MCP — docs, best practices, examples)
+- **Subagents**: `go-reviewer` (Go code review), `angular-reviewer` (Angular conventions), `migration-reviewer` (SQL migration safety), `security-reviewer` (security vulnerability detection)
+- **Skills**: `/new-component <name>` (scaffold Angular component), `/deploy-check` (full FE+BE validation), `/new-migration <desc>` (scaffold SQL migration pair), `/upgrade-deps [go|frontend|all]` (guided dependency upgrades with lockstep bumping), `/security-check [go|frontend|all]` (local security analysis), `dev-standards` (auto-invoked development discipline guardrails)
+- **MCP Servers** (`.mcp.json`): `postgres` (local DB schema introspection), `angular` (official Angular CLI MCP — docs, best practices, examples). See `.example.mcp.json` for additional recommended servers (context7, GitHub)
 
 ### Upstream Provenance
 
@@ -99,6 +104,7 @@ Conventional commits enforced by CI. PR titles must use: `feat`, `fix`, `chore`,
 - **Signals** for reactive state, inline templates for component co-location
 - Component prefix: `app-`, budget: 500kB warning / 1MB error
 - Environment files: `projects/ui/src/env/env.ts` (dev) / `env.prod.ts` (prod)
+- **Menu components** use `@angular/cdk/menu` directly (migrated from `@spartan-ng/brain` menu in the Angular 21 upgrade)
 
 ### Frontend Structure
 
@@ -179,3 +185,9 @@ All under `/api/v1/`, JWT-authenticated:
 - `/projects[/:id]` - CRUD + `/status`, `/logs`, `/prompts`, `/deployment-revisions`, `/analytics`, `/settings`
 - `/dashboard/projects`, `/dashboard/deployment-revisions`, `/dashboard/usage`
 - Webhooks on port 8085: `/sync`, `/kubernetes`, `/tlsask`
+
+### Go Dependency Upgrades
+
+- **OTEL packages are tightly coupled** — core (`otel`, `sdk`, `trace`, exporters) and contrib (`otelhttp`, `otelaws`) must be bumped together
+- Always run `go mod tidy` after `go get` upgrades to clean transitive deps
+- New gosec findings from upstream code: add exclusion rules in `.golangci.yml` rather than modifying upstream code (document in `.scratchpad/TODO.md`)

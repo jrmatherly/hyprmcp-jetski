@@ -1,155 +1,244 @@
 {
   "name": "jetski",
-  "version": "0.4.4",
+  "version": "0.6.0",
   "module": "github.com/hyprmcp/jetski",
-  "generated": "2026-02-26",
-  "purpose": "MCP Gateway management platform - web UI + Go backend for managing MCP gateway deployments on Kubernetes",
+  "generated": "2026-02-27",
+  "repo": "jrmatherly/hyprmcp-jetski",
+  "stats": {
+    "go_packages": 26,
+    "go_files": 85,
+    "go_lines": 6277,
+    "ts_files": 151,
+    "ts_lines": 9228,
+    "sql_migrations": 7,
+    "db_tables": 8,
+    "angular_components": 37,
+    "helm_ui_libraries": 16,
+    "api_routes": 19,
+    "ci_workflows": 4
+  },
   "stack": {
-    "frontend": {
-      "framework": "Angular 20",
-      "ui": "Spartan UI (Brain + Helm)",
-      "styling": "Tailwind CSS 4",
-      "icons": "ng-icons + Lucide",
-      "tables": "TanStack Angular Table",
-      "charts": "Chart.js / ng2-charts",
-      "auth": "angular-oauth2-oidc (Dex OIDC)",
-      "analytics": "PostHog, Sentry",
-      "packageManager": "pnpm 10"
-    },
     "backend": {
-      "language": "Go 1.25",
-      "cli": "Cobra",
-      "router": "Chi",
-      "database": "PostgreSQL (pgx)",
-      "migrations": "golang-migrate",
-      "kubernetes": "client-go + controller-runtime + metacontroller",
-      "jwt": "lestrrat-go/jwx",
-      "observability": "OpenTelemetry + Sentry",
-      "logging": "Zap",
-      "email": "AWS SES / SMTP / noop"
-    },
-    "infra": {
-      "container": "Docker (distroless)",
-      "ci": "GitHub Actions",
-      "release": "Release Please",
-      "deps": "Renovate",
-      "taskRunner": "mise"
-    }
-  },
-  "entryPoints": {
-    "cli": "main.go → internal/cmd/root.go",
-    "apiServer": "internal/cmd/serve.go (port 8080)",
-    "webhookServer": "internal/cmd/serve.go (port 8085)",
-    "frontend": "projects/ui/src/main.ts (port 4200)"
-  },
-  "structure": {
-    "backend": {
-      "internal/cmd": "Cobra CLI: serve, migrate, generate",
-      "internal/handlers": "HTTP API handlers (orgs, projects, dashboard, webhooks)",
-      "internal/middleware": "Auth, logging, OTEL, rate limiting, Sentry",
-      "internal/routing": "Chi router setup",
-      "internal/server": "HTTP server + graceful shutdown",
-      "internal/svc": "Service registry (DB, logger, JWT, mailer, K8s)",
-      "internal/db": "PostgreSQL data access (pgx)",
-      "internal/types": "Domain models",
-      "internal/kubernetes": "MCPGateway CRD (v1alpha1) + controller",
-      "internal/analytics": "Usage analytics",
-      "internal/migrations": "7 SQL migrations",
-      "internal/auth": "JWT/OIDC types",
-      "internal/mail": "Pluggable mailer (SMTP/SES/noop)",
-      "internal/env": "Environment config"
+      "language": "go",
+      "version": "1.25",
+      "router": "chi/v5",
+      "database": "postgresql",
+      "driver": "pgx/v5",
+      "auth": "dex-oidc",
+      "jwt": "lestrrat-go/jwx/v3",
+      "kubernetes": "metacontroller",
+      "observability": "opentelemetry",
+      "error_tracking": "sentry"
     },
     "frontend": {
-      "projects/ui/src/app/app.ts": "Root component",
-      "projects/ui/src/app/app-shell.component.ts": "Layout shell",
-      "projects/ui/src/app/app.config.ts": "Zoneless, OAuth2, Sentry providers",
-      "projects/ui/src/app/app.routes.ts": "Auth guard + lazy-loaded routes",
-      "projects/ui/src/app/authenticated.routes.ts": "All authenticated routes",
-      "projects/ui/src/app/components/": "Shared components (header, nav, table, deployments)",
-      "projects/ui/src/app/pages/": "15 page components",
-      "projects/ui/src/app/services/": "ContextService, ThemeService",
-      "projects/ui/src/app/pipes/": "ColorPipe, RelativeDatePipe, HighlightJsonPipe",
-      "projects/ui/src/app/libs/ui/": "16 Spartan/Helm UI packages"
+      "framework": "angular",
+      "version": "21",
+      "ui_library": "spartan-ng/brain",
+      "css": "tailwind-css-4",
+      "change_detection": "zoneless",
+      "icons": "ng-icons/lucide",
+      "charts": "chart.js/ng2-charts",
+      "analytics": "posthog-js"
     }
   },
-  "apiRoutes": {
-    "/api/v1/context": "GET - App context",
-    "/api/v1/verify-mcp-endpoint": "GET - Verify MCP server connectivity",
-    "/api/v1/organizations": "GET/POST - List/create orgs",
-    "/api/v1/organizations/:id": "PUT - Update org",
-    "/api/v1/organizations/:id/members": "GET/PUT - List/add members",
-    "/api/v1/organizations/:id/members/:userId": "DELETE - Remove member",
-    "/api/v1/projects": "GET/POST - List/create projects",
-    "/api/v1/projects/:id": "GET/DELETE - Get/delete project",
-    "/api/v1/projects/:id/status": "GET - Deployment status",
-    "/api/v1/projects/:id/logs": "GET - MCP server logs",
-    "/api/v1/projects/:id/prompts": "GET - Prompt analytics",
-    "/api/v1/projects/:id/deployment-revisions": "GET - Deployment history",
-    "/api/v1/projects/:id/analytics": "GET - Project analytics",
-    "/api/v1/projects/:id/settings": "PUT - Update settings",
-    "/api/v1/dashboard/projects": "GET - Project summaries",
-    "/api/v1/dashboard/deployment-revisions": "GET - Recent deployments",
-    "/api/v1/dashboard/usage": "GET - Usage stats",
-    "/webhook/sync": "Gateway sync",
-    "/webhook/kubernetes": "K8s events",
-    "/webhook/tlsask": "TLS certificate requests"
-  },
-  "frontendRoutes": {
-    "/": "Redirect to default org/project",
-    "/onboarding": "New user organization setup",
-    "/organizations/new": "Create new organization",
-    "/:org": "Organization dashboard",
-    "/:org/settings": "Organization settings (general, auth, members, projects)",
-    "/:org/new": "Create new project",
-    "/:org/project/:name": "Project dashboard (analytics)",
-    "/:org/project/:name/check": "Post-creation provisioning check",
-    "/:org/project/:name/logs": "MCP call logs",
-    "/:org/project/:name/prompts": "Prompt analytics",
-    "/:org/project/:name/deployments": "Deployment history",
-    "/:org/project/:name/monitoring": "Health metrics + charts"
-  },
-  "commands": {
-    "frontend": {
-      "pnpm install": "Install dependencies",
-      "npm start": "Dev server :4200",
-      "npm run build": "Production build",
-      "npm test": "Unit tests (Karma)",
-      "npm run format": "Prettier + ESLint fix",
-      "npm run lint": "Check lint"
+  "go_packages": {
+    "internal/analytics": {
+      "description": "Usage analytics queries (overview, tools, prompts, sessions, clients)",
+      "files": 8,
+      "exports": ["GetProjectAnalytics"]
     },
-    "backend": {
-      "mise run serve": "Run Go server",
-      "mise run test": "Go tests",
-      "mise run lint": "golangci-lint",
-      "mise run migrate": "Run DB migrations",
-      "mise run purge": "Rollback migrations",
-      "mise run generate": "Generate code",
-      "mise run controller-gen": "Regenerate CRD objects"
+    "internal/apierrors": {
+      "description": "Sentinel errors for API responses",
+      "files": 1,
+      "exports": ["ErrNotFound", "ErrAlreadyExists", "ErrConflict", "ErrForbidden", "ErrQuotaExceeded"]
     },
-    "infra": {
-      "mise install": "Install all tool versions",
-      "docker compose up -d": "Start local dev services"
+    "internal/auth": {
+      "description": "Auth types",
+      "files": 1,
+      "exports": ["UserAuthInfo"]
+    },
+    "internal/buildconfig": {
+      "description": "Build metadata (version, commit, release flag)",
+      "files": 1,
+      "exports": ["Version", "Commit", "IsRelease", "IsDevelopment"]
+    },
+    "internal/cmd": {
+      "description": "Cobra CLI commands (serve, migrate, generate)",
+      "files": 4,
+      "exports": ["NewRoot", "NewServeCommand", "NewMigrateCommand", "NewGenerateCommand"]
+    },
+    "internal/context": {
+      "description": "Request context accessors/mutators (DB, logger, mailer, user, token)",
+      "files": 1,
+      "exports": ["GetDb", "GetLogger", "GetUser", "GetAccessToken", "GetMailer", "GetRequestIPAddress", "WithDb", "WithLogger", "WithUser", "WithAccessToken", "WithMailer", "WithRequestIPAddress"]
+    },
+    "internal/db": {
+      "description": "PostgreSQL data access layer (pgx queries)",
+      "files": 8,
+      "exports": ["GetUserByEmailOrCreate", "CreateOrganization", "CreateProject", "GetProjectsForUser", "GetOrganizationsOfUser", "CreateDeploymentRevision", "GetDeploymentRevisionsForProject", "GetLogsForProject", "GetPromptsForProject", "RunTx"]
+    },
+    "internal/db/queryable": {
+      "description": "Queryable interface for DB abstraction",
+      "files": 1,
+      "exports": ["Queryable"]
+    },
+    "internal/env": {
+      "description": "Environment variable accessors for all config",
+      "files": 3,
+      "exports": ["Initialize", "DatabaseUrl", "OIDCUrl", "Host", "GatewayContainerImageTag", "GetMailerConfig"]
+    },
+    "internal/envparse": {
+      "description": "Environment variable parsing helpers",
+      "files": 1,
+      "exports": ["Float", "NonNegativeNumber", "PositiveDuration", "ByteSlice", "MailAddress"]
+    },
+    "internal/envutil": {
+      "description": "Generic environment variable utilities",
+      "files": 1,
+      "exports": ["GetEnv", "GetEnvOrDefault", "GetEnvOrNil", "RequireEnv", "GetEnvParsedOrDefault"]
+    },
+    "internal/frontend": {
+      "description": "Embedded Angular build (fs.FS)",
+      "files": 1,
+      "exports": ["BrowserFS"]
+    },
+    "internal/gatewayconfig": {
+      "description": "MCP Gateway YAML config parser",
+      "files": 1,
+      "exports": ["Parse", "ParseFile", "Config"]
+    },
+    "internal/handlers": {
+      "description": "HTTP API handlers and routers",
+      "files": 17,
+      "exports": ["ContextRouter", "DashboardRouter", "OrganizationsRouter", "ProjectsRouter", "MiscRouter", "InternalRouter", "WebhookRouter", "StaticFileHandler"]
+    },
+    "internal/kubernetes": {
+      "description": "MCPGateway CRD (v1alpha1), controller, apply configs",
+      "files": 12,
+      "exports": ["MCPGateway", "Install", "MCPGatewaySpec", "AuthorizationSpec", "ProjectSpec"]
+    },
+    "internal/lists": {
+      "description": "Pagination and sorting helpers",
+      "files": 1,
+      "exports": ["ParsePaginationOrDefault", "ParseSortingOrDefault", "ListResponse"]
+    },
+    "internal/mail": {
+      "description": "Mailer interface + SMTP/SES/noop implementations",
+      "files": 5,
+      "exports": ["Mailer", "New", "From", "To", "Subject", "HtmlBody", "TextBody"]
+    },
+    "internal/mailsending": {
+      "description": "Email sending workflows (invitations)",
+      "files": 1,
+      "exports": ["SendUserInviteMail"]
+    },
+    "internal/mailtemplates": {
+      "description": "HTML email templates",
+      "files": 1,
+      "exports": ["InviteUser"]
+    },
+    "internal/middleware": {
+      "description": "Chi middleware (auth, logging, context, rate limiting, OTEL, Sentry)",
+      "files": 1,
+      "exports": ["AuthMiddleware", "ContextInjectorMiddleware", "LoggerCtxMiddleware", "LoggingMiddleware", "OTEL", "Sentry", "SentryUser", "RateLimitUserIDKey"]
+    },
+    "internal/migrations": {
+      "description": "Database migration runner (golang-migrate)",
+      "files": 1,
+      "exports": ["Up", "Down", "Migrate"]
+    },
+    "internal/routing": {
+      "description": "Chi router assembly",
+      "files": 1,
+      "exports": ["NewRouter", "ApiRouter", "FrontendRouter", "InternalRouter", "WebhookRouter"]
+    },
+    "internal/server": {
+      "description": "HTTP server with graceful shutdown",
+      "files": 2,
+      "exports": ["Server", "NewServer"]
+    },
+    "internal/svc": {
+      "description": "Service registry (DB pool, logger, tracers, JWT keyset, mailer, K8s client)",
+      "files": 8,
+      "exports": ["Registry", "New", "NewDefault", "ExecDbMigration"]
+    },
+    "internal/tracers": {
+      "description": "OpenTelemetry tracer setup",
+      "files": 1,
+      "exports": ["Tracers"]
+    },
+    "internal/types": {
+      "description": "Domain models shared across packages",
+      "files": 7,
+      "exports": ["Organization", "Project", "UserAccount", "DeploymentRevision", "MCPServerLog", "ProjectAnalytics", "ProjectSummary", "OrganizationDashboardUsage"]
+    },
+    "internal/util": {
+      "description": "Generic helpers (Must, PtrTo, Require)",
+      "files": 2,
+      "exports": ["Must", "Require", "PtrTo", "PtrCopy", "PtrEq"]
     }
   },
-  "automations": {
-    "hooks": {
-      ".claude/settings.json": "PostToolUse: auto-format TS/HTML/CSS; PreToolUse: block lock files + secret env files"
-    },
-    "subagents": {
-      ".claude/agents/go-reviewer.md": "Go code review (SQL injection, middleware ordering, error handling, K8s CRD)",
-      ".claude/agents/angular-reviewer.md": "Angular conventions (standalone, zoneless, signals, ng-icons, Spartan UI)"
-    },
-    "skills": {
-      ".claude/skills/new-component/SKILL.md": "/new-component <name> — scaffold Angular standalone component",
-      ".claude/skills/deploy-check/SKILL.md": "/deploy-check — run full FE+BE validation (lint + test)"
-    }
+  "api_routes": {
+    "authenticated": [
+      { "method": "GET", "path": "/api/v1/context/", "handler": "getContextHandler" },
+      { "method": "GET", "path": "/api/v1/verify-mcp-endpoint", "handler": "verifyMcpEndpointHandler" },
+      { "method": "GET", "path": "/api/v1/organizations/", "handler": "getOrganizations" },
+      { "method": "POST", "path": "/api/v1/organizations/", "handler": "postOrganizationHandler" },
+      { "method": "PUT", "path": "/api/v1/organizations/{organizationId}", "handler": "putOrganizationHandler" },
+      { "method": "GET", "path": "/api/v1/organizations/{organizationId}/members", "handler": "getOrganizationMembers" },
+      { "method": "PUT", "path": "/api/v1/organizations/{organizationId}/members", "handler": "putOrganizationMember" },
+      { "method": "DELETE", "path": "/api/v1/organizations/{organizationId}/members/{userId}", "handler": "deleteOrganizationMember" },
+      { "method": "GET", "path": "/api/v1/projects/", "handler": "getProjects" },
+      { "method": "POST", "path": "/api/v1/projects/", "handler": "postProjectHandler" },
+      { "method": "GET", "path": "/api/v1/projects/{projectId}", "handler": "getProjectSummary" },
+      { "method": "DELETE", "path": "/api/v1/projects/{projectId}", "handler": "deleteProjectHandler" },
+      { "method": "GET", "path": "/api/v1/projects/{projectId}/status", "handler": "getProjectStatusHandler" },
+      { "method": "GET", "path": "/api/v1/projects/{projectId}/logs", "handler": "getLogsForProject" },
+      { "method": "GET", "path": "/api/v1/projects/{projectId}/prompts", "handler": "getPromptsForProject" },
+      { "method": "GET", "path": "/api/v1/projects/{projectId}/deployment-revisions", "handler": "getDeploymentRevisionsForProject" },
+      { "method": "GET", "path": "/api/v1/projects/{projectId}/analytics", "handler": "getAnalytics" },
+      { "method": "PUT", "path": "/api/v1/projects/{projectId}/settings", "handler": "putProjectSettings" },
+      { "method": "GET", "path": "/api/v1/dashboard/projects", "handler": "getProjectsForDashboard" },
+      { "method": "GET", "path": "/api/v1/dashboard/deployment-revisions", "handler": "getDeploymentRevisionsForDashboard" },
+      { "method": "GET", "path": "/api/v1/dashboard/usage", "handler": "getUsageForDashboard" }
+    ],
+    "internal": [
+      { "method": "GET", "path": "/internal/environment", "handler": "getFrontendEnvironmentHandler" }
+    ],
+    "webhooks": [
+      { "method": "POST", "path": "/webhook/proxy/{deploymentRevisionID}", "handler": "gateway.NewHandler" }
+    ]
   },
-  "fileCounts": {
-    "goFiles": 84,
-    "tsFiles": 51,
-    "goTestFiles": 3,
-    "tsSpecFiles": 1,
-    "sqlMigrations": 7,
-    "uiLibPackages": 16
+  "database": {
+    "tables": ["Organization", "UserAccount", "Organization_UserAccount", "Project", "DeploymentRevision", "DeploymentRevisionEvent", "MCPServerLog", "ContextProperty", "Context"],
+    "enums": ["DEPLOYMENT_REVISION_EVENT_TYPE", "CONTEXT_PROPERTY_TYPE"],
+    "migrations": 7,
+    "migration_range": "0-6"
+  },
+  "frontend_components": {
+    "root": ["App", "AppShellComponent"],
+    "shared": ["HeaderComponent", "NavigationComponent", "TableComponent", "TableHeadSortButtonComponent", "TableHeadSelectionComponent", "TableRowSelectionComponent", "UsageCardComponent", "UpsellWrapperComponent", "DeploymentRevisionComponent", "ProjectDeploymentsComponent", "OrganizationDeploymentsComponent", "ProjectsGridComponent"],
+    "pages": ["HomeComponent", "OnboardingComponent", "NewProjectComponent", "OrganizationDashboardComponent", "OrganizationSettingsComponent", "OrganizationSettingsGeneralComponent", "OrganizationSettingsAuthorizationComponent", "OrganizationSettingsMembersComponent", "ProjectSettingsGeneralComponent", "ProjectDashboardComponent", "ProjectCheckComponent", "LogsComponent", "PromptsComponent", "MonitoringComponent"],
+    "analytics_widgets": ["OverviewComponent", "ClientUsageComponent", "ToolAnalyticsComponent", "ToolsPerformanceComponent", "RecentSessionsComponent", "PromptAnalyticsComponent"],
+    "pipes": ["ColorPipe", "RelativeDatePipe", "HighlightJsonPipe"],
+    "services": ["ContextService", "ThemeService"]
+  },
+  "helm_ui_libraries": [
+    "ui-alert-helm", "ui-button-helm", "ui-card-helm", "ui-checkbox-helm",
+    "ui-dialog-helm", "ui-icon-helm", "ui-input-helm", "ui-label-helm",
+    "ui-menu-helm", "ui-select-helm", "ui-sonner-helm", "ui-spinner-helm",
+    "ui-table-helm", "ui-tooltip-helm", "ui-typography-helm", "ui-utils-helm"
+  ],
+  "ci_workflows": {
+    "build.yaml": "Build, lint, test, Docker build+push, Cosign signing",
+    "release-please.yaml": "Automated release PR creation from conventional commits",
+    "security.yaml": "CodeQL (Go+TS), govulncheck, weekly scheduled scans",
+    "semantic-pr.yaml": "PR title conventional commit validation"
+  },
+  "claude_automations": {
+    "hooks": ["prettier-format-on-save", "goimports-format-on-save", "block-lock-files", "block-generated-files", "block-existing-migrations", "security-workflow-reminder"],
+    "subagents": ["go-reviewer", "angular-reviewer", "migration-reviewer", "security-reviewer"],
+    "skills": ["new-component", "deploy-check", "new-migration", "upgrade-deps", "security-check", "dev-standards"],
+    "mcp_servers": ["postgres", "angular"]
   }
 }
